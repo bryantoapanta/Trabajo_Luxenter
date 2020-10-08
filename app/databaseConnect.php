@@ -145,7 +145,7 @@ class ModeloUserDB
         return false; 
     }
 
-     //// Añadir producto
+     //// Consulto si existe el codigo del producto
      public static function consultar_codigo($codigo): bool
      {
  
@@ -154,8 +154,8 @@ class ModeloUserDB
          $stmt->execute();
          $Total_filas = $stmt->rowCount();
          if ($Total_filas>=1) { //si hay resultado = true
-             return true;
+             return false;
          }
-         return false; 
+         return true; 
      }
 }
