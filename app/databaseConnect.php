@@ -10,6 +10,7 @@ class ModeloUserDB
     VALUES (?, ?, ?, ?)";
     private static $obtener_productos = "SELECT * from videos_web_magento2_pruebas Limit :iniciar, :terminar";
     private static $consulta_codigo = "SELECT * from videos_web_magento2_pruebas where prod_codigo = ?";
+    private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
     private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
     private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
     activado = ? where prod_codigo = ?";
@@ -35,22 +36,22 @@ class ModeloUserDB
     // Tabla de todos los productos para visualizar
     public static function GetAll($pagina): array
     {
-        $max=10;
-        $min=($pagina-1)*$max;
-        
+        $max = 10;
+        $min = ($pagina - 1) * $max;
+
         // Genero los datos para la vista
         $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Limit :min, :max"); //creamos la consulta
         $stmt->bindValue(':min', $min, PDO::PARAM_INT);
         $stmt->bindValue(':max', $max, PDO::PARAM_INT);
-       
+
         $tablaProductos = [];
         $stmt->execute();
-        
+
         $resultado = $stmt->fetchAll();
-       
+
 
         foreach ($resultado as $fila) {
-            
+
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
             $datosProducto = [
                 $fila['prod_codigo'],
@@ -101,7 +102,7 @@ class ModeloUserDB
     public static function modificarProducto($codigo): array
     {
 
-        $stmt = self::$dbh->prepare(self::$consulta_codigo); //creamos la consulta
+        $stmt = self::$dbh->prepare(self::$consulta_orden); //creamos la consulta
         $stmt->bindValue(1, $codigo);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -138,24 +139,63 @@ class ModeloUserDB
         $stmt->bindValue(2, $datos[1]);
         $stmt->bindValue(3, $datos[2]);
         $stmt->bindValue(4, $datos[3]);
+       
+        // consulto si existe el codigo, si existe...
+        if (self::consultar_codigo($datos[0])) {
+            //consulto si existe el numero de orden
+            
+            
+            if (self::consultar_orden($datos[0], $datos[2])) {
+                $msg = "El numero de orden ya existe";
+                CtlVerProductos($msg, 1);
+                //return false;
+
+            } else if ($stmt->execute()) { // si se ejecuta le devolvemos true
+                return true;;
+
+            } else return false;
         
-        if ($stmt->execute()) { // si se ejecuta le devolvemos true
-            echo "aqui";return true;;
+        } else {
+            if ($stmt->execute()) { // si se ejecuta le devolvemos true
+                return true;;
+            } else return false;
         }
-        return false; 
     }
 
-     //// Consulto si existe el codigo del producto
-     public static function consultar_codigo($codigo): bool
-     {
- 
-         $stmt = self::$dbh->prepare(self::$consulta_codigo);
-         $stmt->bindValue(1, $codigo);
-         $stmt->execute();
-         $Total_filas = $stmt->rowCount();
-         if ($Total_filas>=1) { //si hay resultado = true
-             return false;
-         }
-         return true; 
-     }
+    //// Consulto si existe el codigo del producto
+    public static function consultar_codigo($codigo): bool
+    {
+        
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas"); //creamos la consulta
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+        //Recorremos todos los elementos en busca de un elemento ya existente
+        //echo $codigo;
+        foreach ($resultado as $fila) {
+             
+            // le pregunto si el codigo coincide con algun codigo de la tabla de BD
+            if ($fila['prod_codigo'] == $codigo) {
+                echo 1;//return true;--- aqui error
+            } else echo "no";
+        }
+        //return false; //devolvemos una tabla con todos lo valores de la base de datos
+    }
+
+    //// Consulto si existe la orden del producto indicado
+    public static function consultar_orden($codigo, $orden): bool
+    {
+
+        $stmt = self::$dbh->prepare(self::$consulta_codigo);
+        $stmt->bindValue(1, $codigo);
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+        //Compruebo si el orden del prod_codigo existe ya o no
+        foreach ($resultado as $filas) {
+            if ($filas[2] == $orden) {
+                echo "si existe la orden, elija otra";
+                return true;
+            } else //echo "no existe";
+                return false;
+        }
+    }
 }

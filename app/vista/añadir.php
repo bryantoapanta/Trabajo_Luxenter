@@ -11,19 +11,22 @@
               <tr>
                   <td>Codigo</td>
                   <td><input type="text" name="prod_codigo" value="<?php $caracteres = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
-                     echo substr(str_shuffle($caracteres), 0, 8); ?>"></td>
+                                                                    echo substr(str_shuffle($caracteres), 0, 8); ?>"></td>
               </tr>
               <tr>
                   <td>Url</td>
-                  <td><input type="text" name="url_video"></td>
+                  <td><input type="text" name="url_video" required></td>
               </tr>
               <tr>
                   <td>Orden</td>
-                  <td><input type="number" name="orden_video"></td>
+                  <td><input type="number" name="orden_video" required></td>
               </tr>
               <tr>
                   <td>Activado</td>
-                  <td><input type="number" name="activado_video" value="1"></td>
+                  <td><select name="activado_video" required>
+                          <option value="0">Desactivado</option>
+                          <option value="1">Activado</option>
+                      </select> </td>
               </tr>
 
           </table>

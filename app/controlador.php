@@ -72,7 +72,7 @@ function CtlAñadir()
                 $activo
             ];
             
-            if (ModeloUserDB::añadirProducto($datos) && ModeloUserDB::consultar_codigo($datos[0])) {
+            if (ModeloUserDB::añadirProducto($datos)) {
                 $msg = "¡Producto añadido con éxito!";
             } else $msg = "Producto no añadido!";// llamamos a la funcion para añadir productos.
 

@@ -38,8 +38,9 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                     echo "<td>$datoProducto[$j]</td>";
                 }
                 ?>
-                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $clave  ?>');">&#9760;</a></td>
+
                 <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $clave  ?>');">&#9998;</a></td>
+                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $clave  ?>');">&#9760;</a></td>
 
             </tr>
         <?php } ?>
