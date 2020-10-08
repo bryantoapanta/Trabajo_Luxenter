@@ -6,10 +6,12 @@ class ModeloUserDB
 {
 
     private static $dbh = null;
-
-    private static $consulta_codigo = "Select * from videos_web_magento2_pruebas where prod_codigo = ?";
-    private static $borrar_producto = "Delete from videos_web_magento2_pruebas where prod_codigo = ?";
-    private static $modificar_producto = "Update videos_web_magento2_pruebas set url_video = ? , orden = ? ,
+    private static $añadir_producto = "INSERT INTO videos_web_magento2_pruebas (prod_codigo, url_video, orden, activado)
+    VALUES (?, ?, ?, ?)";
+    private static $obtener_productos = "SELECT * from videos_web_magento2_pruebas Limit :iniciar, :terminar";
+    private static $consulta_codigo = "SELECT * from videos_web_magento2_pruebas where prod_codigo = ?";
+    private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
+    private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
     activado = ? where prod_codigo = ?";
 
 
@@ -30,16 +32,25 @@ class ModeloUserDB
         }
     }
 
-    // Tabla de todos los usuarios para visualizar
-    public static function GetAll(): array
+    // Tabla de todos los productos para visualizar
+    public static function GetAll($pagina): array
     {
+        $max=10;
+        $min=($pagina-1)*$max;
+        
         // Genero los datos para la vista
-        $stmt = self::$dbh->query("select * from videos_web_magento2_pruebas");
-
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Limit :min, :max"); //creamos la consulta
+        $stmt->bindValue(':min', $min, PDO::PARAM_INT);
+        $stmt->bindValue(':max', $max, PDO::PARAM_INT);
+       
         $tablaProductos = [];
         $stmt->execute();
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        while ($fila = $stmt->fetch()) {
+        
+        $resultado = $stmt->fetchAll();
+       
+
+        foreach ($resultado as $fila) {
+            
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
             $datosProducto = [
                 $fila['prod_codigo'],
@@ -47,7 +58,7 @@ class ModeloUserDB
                 $fila['orden'],
                 $fila['activado']
             ];
-            $tablaProductos[$fila['prod_codigo']] = $datosProducto; //creo una fila de valores para cada producto.
+            $tablaProductos[$fila['prod_codigo']] = $datosProducto;
         }
         return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
     }
@@ -105,4 +116,46 @@ class ModeloUserDB
         }
         return $datosProducto; //devolvemos una tabla con todos lo valores del producto*/
     }
+
+    // Obtener productos totales
+    public static function obtenerFilas()
+    {
+
+        $stmt = self::$dbh->query("select * from videos_web_magento2_pruebas"); //cargamos la consulta
+        $stmt->execute(); //la ejecuto.
+        $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+
+        return $Total_filas; //devolvemos el valor
+    }
+
+
+    //// Añadir producto
+    public static function añadirProducto($datos): bool
+    {
+
+        $stmt = self::$dbh->prepare(self::$añadir_producto);
+        $stmt->bindValue(1, $datos[0]);
+        $stmt->bindValue(2, $datos[1]);
+        $stmt->bindValue(3, $datos[2]);
+        $stmt->bindValue(4, $datos[3]);
+        
+        if ($stmt->execute()) { // si se ejecuta le devolvemos true
+            echo "aqui";return true;;
+        }
+        return false; 
+    }
+
+     //// Añadir producto
+     public static function consultar_codigo($codigo): bool
+     {
+ 
+         $stmt = self::$dbh->prepare(self::$consulta_codigo);
+         $stmt->bindValue(1, $codigo);
+         $stmt->execute();
+         $Total_filas = $stmt->rowCount();
+         if ($Total_filas>=1) { //si hay resultado = true
+             return true;
+         }
+         return false; 
+     }
 }

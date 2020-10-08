@@ -31,6 +31,11 @@
             border-collapse: collapse;
             padding: 10px;
         }
+
+        div {
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
     </style>
 
 </head>

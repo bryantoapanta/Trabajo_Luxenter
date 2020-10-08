@@ -8,13 +8,19 @@ include_once 'app/databaseConnect.php';
 ModeloUserDB::init();
 $msg = "";
 
-//echo("hola");
+
+
+// al iniciar por defecto tendra la pagina 1
+if (isset($_GET["pagina"])) { // si existe un get pagina
+    $pagina = $_GET["pagina"];
+} else $pagina = 1; //parametro para saber la pagina e imprimir los productos por cada pagina.
+
 
 
 
 
 if (isset($_GET['orden']) && isset($_GET['id'])) {
-
+  
     switch ($_GET['orden']) {
 
         case "Borrar":
@@ -26,7 +32,11 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
             break;
 
         case "Inicio":
-            CtlVerProductos($msg); // llamamos a la funcion verProductos.
+            CtlVerProductos($msg, 1); // llamamos a la funcion verProductos.
+            break;
+
+        case "Añadir":
+            CtlAñadir(); // llamamos a la funcion verProductos.
             break;
 
         case "Actualizar":
@@ -48,7 +58,7 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
 
                     CtlActualizar($datos); // llamamos a la funcion verProductos y le pasamos el array.
                 }
-            } else  CtlVerProductos($msg);
+            } else  CtlVerProductos($msg, 1);
             break;
     }
-} else CtlVerProductos($msg); //cargo la funcion del controlador para imprimir los productos.
+} else CtlVerProductos($msg, $pagina); //cargo la funcion del controlador para imprimir los productos.
