@@ -141,12 +141,12 @@ class ModeloUserDB
         $stmt->bindValue(4, $datos[3]);
 
         // consulto si existe el codigo, si es true...
-        if (self::consultar_codigo($datos[0],$datos[2])) {
-            //consulto si existe el numero de orden
+        if (self::consultar_codigo($datos[0])) {
+            //echo "codigo encontrado";
             //return true;
 
 
-            if (self::consultar_orden($datos[0],$datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, si no devuelve true y añadir se cancela
+            if (self::consultar_orden($datos[0], $datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, si no devuelve true y añadir se cancela
                 /* $msg = "El numero de orden ya existe";
                 CtlVerProductos($msg, 1);*/
                 echo "orden existe";
@@ -158,6 +158,7 @@ class ModeloUserDB
                 return true;;
             } else return false;*/
         } else {
+            echo "si se añade";
             return false;/*
             if ($stmt->execute()) { // si se ejecuta le devolvemos true
                 return true;;
@@ -176,11 +177,12 @@ class ModeloUserDB
         //echo $codigo;
         foreach ($resultado as $fila) {
             echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
-            // le pregunto si el codigo coincide con algun codigo de la tabla de BD
-            if (strcmp($fila['prod_codigo'], $codigo)) { //utilizamos strcmp para comparar ambos strings
-                //echo " CODIGO ENCONTRADO";
+            var_dump($fila["prod_codigo"]);echo "<br>";
+            var_dump($codigo);echo "<br>";
+            if ($fila['prod_codigo'] == $codigo) { //utilizamos strcmp para comparar ambos strings
+                echo " CODIGO ENCONTRADO <br>";
                 return true;
-            } //else echo "no";
+            }
         }
 
         return false; //devolvemos una tabla con todos lo valores de la base de datos
@@ -190,29 +192,25 @@ class ModeloUserDB
 
 
     //// Consulto si existe la orden del producto indicado
-    /*public static function consultar_orden($codigo,$orden): bool
+    public static function consultar_orden($codigo, $orden): bool
     {
-        
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo = :codigo");
-        $stmt->bindValue(":codigo", $codigo, PDO::PARAM_STR);
+
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas"); //creamos la consulta
         $stmt->execute();
-
         $resultado = $stmt->fetchAll();
-        //Compruebo si el orden del prod_codigo existe ya o no
-        $Total_filas = $stmt->rowCount();
-        echo "total filas = " . $Total_filas."<br>";
+        //Recorremos todos los elementos en busca de un elemento ya existente
+        //echo $codigo;
+        foreach ($resultado as $fila) {
+            echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
+            // le pregunto si el codigo coincide con algun codigo de la tabla de BD
+            if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
 
-        
-        if ($Total_filas != 0) {
-            foreach ($resultado as $filas) {
-                echo $filas[2] . " = " . $orden . "<br>";
-
-                if ($filas[2] == $orden) {
-                    echo "si existe la orden, elija otra";
+                if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
                     return true;
-                } else echo "no existe orden";
-                return false;
-            }
-        } else return false;
-    }*/
+                }
+            } //else echo "no";
+        }
+
+        return false; //devolvemos una tabla con todos lo valores de la base de datos
+    }
 }
