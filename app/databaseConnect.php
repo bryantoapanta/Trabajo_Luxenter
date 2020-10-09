@@ -6,10 +6,10 @@ class ModeloUserDB
 {
 
     private static $dbh = null;
+
     private static $añadir_producto = "INSERT INTO videos_web_magento2_pruebas (prod_codigo, url_video, orden, activado)
     VALUES (?, ?, ?, ?)";
-    private static $obtener_productos = "SELECT * from videos_web_magento2_pruebas Limit :iniciar, :terminar";
-    private static $consulta_codigo = "SELECT * from videos_web_magento2_pruebas where prod_codigo = ?";
+  
     private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
     private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
     private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
@@ -131,6 +131,7 @@ class ModeloUserDB
 
 
     //// Añadir producto
+    //// Añadir producto
     public static function añadirProducto($datos): bool
     {
 
@@ -157,13 +158,15 @@ class ModeloUserDB
             } /* if ($stmt->execute()) { // si se ejecuta le devolvemos true
                 return true;;
             } else return false;*/
-        } else {
-            echo "si se añade";
-            return false;/*
-            if ($stmt->execute()) { // si se ejecuta le devolvemos true
-                return true;;
-            } else return false;*/
+        } 
+
+        
+        if ($stmt->execute()) { // si se ejecuta le devolvemos true
+            echo "aqui";return true;;
         }
+
+
+        return false; 
     }
 
     //// Consulto si existe el codigo del producto
@@ -176,10 +179,11 @@ class ModeloUserDB
         //Recorremos todos los elementos en busca de un elemento ya existente
         //echo $codigo;
         foreach ($resultado as $fila) {
-            echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
-            var_dump($fila["prod_codigo"]);echo "<br>";
-            var_dump($codigo);echo "<br>";
+            
+           /* var_dump($fila["prod_codigo"]);echo "<br>";
+            var_dump($codigo);echo "<br>";*/
             if ($fila['prod_codigo'] == $codigo) { //utilizamos strcmp para comparar ambos strings
+                echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
                 echo " CODIGO ENCONTRADO <br>";
                 return true;
             }
@@ -201,10 +205,10 @@ class ModeloUserDB
         //Recorremos todos los elementos en busca de un elemento ya existente
         //echo $codigo;
         foreach ($resultado as $fila) {
-            echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
+            
             // le pregunto si el codigo coincide con algun codigo de la tabla de BD
             if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
-
+                echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
                 if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
                     return true;
                 }
