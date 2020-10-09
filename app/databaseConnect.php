@@ -9,7 +9,7 @@ class ModeloUserDB
 
     private static $añadir_producto = "INSERT INTO videos_web_magento2_pruebas (prod_codigo, url_video, orden, activado)
     VALUES (?, ?, ?, ?)";
-  
+
     private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
     private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
     private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
@@ -141,32 +141,29 @@ class ModeloUserDB
         $stmt->bindValue(3, $datos[2]);
         $stmt->bindValue(4, $datos[3]);
 
+        $confirmar = 1;
         // consulto si existe el codigo, si es true...
         if (self::consultar_codigo($datos[0])) {
             //echo "codigo encontrado";
             //return true;
 
 
-            if (self::consultar_orden($datos[0], $datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, si no devuelve true y añadir se cancela
+            if (self::consultar_orden($datos[0], $datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, 
                 /* $msg = "El numero de orden ya existe";
                 CtlVerProductos($msg, 1);*/
                 echo "orden existe";
-                return false;
-            } else {
-                echo "orden no existe";
-                return true;
-            } /* if ($stmt->execute()) { // si se ejecuta le devolvemos true
-                return true;;
-            } else return false;*/
-        } 
-
-        
-        if ($stmt->execute()) { // si se ejecuta le devolvemos true
-            echo "aqui";return true;;
+                $confirmar = 0;
+            }
         }
+        echo $confirmar;
+        if ($confirmar == 1) {
+            if ($stmt->execute()) { // si se ejecuta le devolvemos true
+                //echo "aqui";
+                return true;;
+            }
+        } else return false;
 
-
-        return false; 
+        return false;
     }
 
     //// Consulto si existe el codigo del producto
@@ -179,11 +176,11 @@ class ModeloUserDB
         //Recorremos todos los elementos en busca de un elemento ya existente
         //echo $codigo;
         foreach ($resultado as $fila) {
-            
-           /* var_dump($fila["prod_codigo"]);echo "<br>";
+
+            /* var_dump($fila["prod_codigo"]);echo "<br>";
             var_dump($codigo);echo "<br>";*/
             if ($fila['prod_codigo'] == $codigo) { //utilizamos strcmp para comparar ambos strings
-                echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
+                echo "codigo bd = " . $fila["prod_codigo"] . " - " . $codigo . "<br>";
                 echo " CODIGO ENCONTRADO <br>";
                 return true;
             }
@@ -205,11 +202,12 @@ class ModeloUserDB
         //Recorremos todos los elementos en busca de un elemento ya existente
         //echo $codigo;
         foreach ($resultado as $fila) {
-            
+
             // le pregunto si el codigo coincide con algun codigo de la tabla de BD
             if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
-                echo $fila["prod_codigo"] . " = " . $codigo . "<br>";
+                echo "prod_codigo = " . $fila['prod_codigo'] . "orden = " . $fila["orden"] . " - " . $orden . "<br>";
                 if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
+                    echo "encontrado";
                     return true;
                 }
             } //else echo "no";
