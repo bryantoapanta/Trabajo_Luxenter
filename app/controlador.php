@@ -78,6 +78,7 @@ function CtlAñadir()
 
             CtlVerProductos($msg,1);
         }
+        
     } else  include_once("vista/añadir.php");
     
 
