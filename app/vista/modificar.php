@@ -13,17 +13,17 @@
               </tr>
               <tr>
                   <td>Url</td>
-                  <td><input type="text" name="url_video" value="<?= $datos[1] ?> required"></td>
+                  <td> <input type="text" name="url_video" value="<?= $datos[1] ?>" required ></td>
               </tr>
               <tr>
                   <td>Orden</td>
-                  <td><input type="number" name="orden_video" value="<?= $datos[2] ?> required"></td>
+                  <td><input type="number" name="orden_video" value="<?= $datos[2] ?>" required></td>
               </tr>
               <tr>
                   <td>Activado</td>
                   <td><select name="activado_video" required>
-                          <option value="0">Desactivado</option>
-                          <option value="1">Activado</option>
+                          <option value="0" <?= ($datos[3]==0)?"selected=\"selected\"":""; ?>>Desactivado</option>
+                          <option value="1" <?= ($datos[3]==1)?"selected=\"selected\"":""; ?>>Activado</option>
                       </select> </td>
               </tr>
 

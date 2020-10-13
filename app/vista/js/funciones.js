@@ -4,9 +4,9 @@ function confirmarBorrarProducto(codigo) {
     }
 }
 
-function confirmarRenombrarProducto(codigo) {
+function confirmarRenombrarProducto(url,codigo) {
     if (confirm("¿Quieres renombrar el producto:  " + codigo + "?")) {
-        document.location.href = "?orden=Modificar&id=" + codigo; //llamamos al index y le pasamos un codigo como parametro.
+        document.location.href = "?orden=Modificar&id=" + url; //llamamos al index y le pasamos un codigo como parametro.
     }
 }
 

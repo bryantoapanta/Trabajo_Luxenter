@@ -10,6 +10,7 @@ class ModeloUserDB
     private static $añadir_producto = "INSERT INTO videos_web_magento2_pruebas (prod_codigo, url_video, orden, activado)
     VALUES (?, ?, ?, ?)";
 
+    private static $consulta_url_modificar = "SELECT * from videos_web_magento2_pruebas where url_video = ?";
     private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
     private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
     private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
@@ -101,8 +102,8 @@ class ModeloUserDB
     //// Modificar un producto (boolean)
     public static function modificarProducto($codigo): array
     {
-
-        $stmt = self::$dbh->prepare(self::$consulta_orden); //creamos la consulta
+        echo "modificar";
+        $stmt = self::$dbh->prepare(self::$consulta_url_modificar); //creamos la consulta
         $stmt->bindValue(1, $codigo);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

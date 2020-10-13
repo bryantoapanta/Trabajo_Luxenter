@@ -31,6 +31,7 @@ function CtlBorrar($codigo)
 //Pasamos el codigo y los nuevos datos para actualizar el producto.
 function CtlModificar($codigo)
 {
+    var_dump($codigo);
     $datos = ModeloUserDB::modificarProducto($codigo);
 
     var_dump($datos);
