@@ -142,19 +142,32 @@ class ModeloUserDB
         $stmt->bindValue(4, $datos[3]);
 
         $confirmar = 1;
-        // consulto si existe el codigo, si es true...
-        if (self::consultar_codigo($datos[0])) {
-            //echo "codigo encontrado";
-            //return true;
+
+        if (self::consultarUrl($datos[1]) == false) { // si al consultar la url te devuelve false...
+            echo "es false consultar datos";
+            if (self::consultar_codigo($datos[0])) {
+                //echo "codigo encontrado";
+                //return true;
 
 
-            if (self::consultar_orden($datos[0], $datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, 
-                /* $msg = "El numero de orden ya existe";
-                CtlVerProductos($msg, 1);*/
-                echo "orden existe";
-                $confirmar = 0;
+                if (self::consultar_orden($datos[0], $datos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, 
+                    /* $msg = "El numero de orden ya existe";
+                    CtlVerProductos($msg, 1);*/
+                    echo '<script type="text/javascript">
+                        alert("La Orden ya existe");
+                         </script>';
+                    $confirmar = 0;
+                }
             }
+        } else {
+            echo '<script type="text/javascript">
+            alert("La Url ya existe");
+            </script>';
+            $confirmar = 0;
         }
+        //return false;
+        // consulto si existe el codigo, si es true...
+
         echo $confirmar;
         if ($confirmar == 1) {
             if ($stmt->execute()) { // si se ejecuta le devolvemos true
@@ -214,5 +227,25 @@ class ModeloUserDB
         }
 
         return false; //devolvemos una tabla con todos lo valores de la base de datos
+    }
+
+
+    //// Consulto si existe el codigo del producto
+    public static function consultarUrl($codigo): bool
+    {
+        var_dump($codigo);
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where url_video = ?"); //creamos la consulta
+        $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+        //Recorremos todos los elementos en busca de un elemento ya existente
+        //echo $codigo;
+        echo "resultado= " . $stmt->rowCount();
+        if ($stmt->rowCount() > 0) {
+            echo "  existe resultado";
+            return true;
+        } else "no existe";
+        return false; //obtenemos el numero de filas totales.
+
     }
 }
