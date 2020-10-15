@@ -40,7 +40,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                 ?>
 
                 <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1]?>','<?=$datoProducto[0]?>');">&#9998;</a></td>
-                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[0]  ?>');">&#9760;</a></td>
+                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[1]?>','<?=$datoProducto[0]?>');">&#9760;</a></td>
 
             </tr>
         <?php } ?>

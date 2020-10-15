@@ -12,9 +12,9 @@ class ModeloUserDB
 
     private static $consulta_url_modificar = "SELECT * from videos_web_magento2_pruebas where url_video = ?";
     private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
-    private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where prod_codigo = ?";
-    private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set url_video = ? , orden = ? ,
-    activado = ? where prod_codigo = ?";
+    private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where url_video = ?";
+    private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set  prod_codigo = ?,url_video= ?, orden = ? ,
+    activado = ? where url_video = ?";
 
 
     public static function init()
@@ -51,7 +51,7 @@ class ModeloUserDB
         $resultado = $stmt->fetchAll();
 
         $contador = 0;
-        
+
         foreach ($resultado as $fila) {
             //echo $fila["prod_codigo"]."<br> ".$contador;
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
@@ -61,7 +61,7 @@ class ModeloUserDB
                 $fila['orden'],
                 $fila['activado']
             ];
-            
+
             $tablaProductos[$contador++] = $datosProducto;
         }
         return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
@@ -70,52 +70,50 @@ class ModeloUserDB
 
 
     // Actualizar datos producto (boolean)
-    public static function productoUpdate($newDatos): bool
+    /* public static function productoUpdate($newDatos): bool
     {
         var_dump($newDatos);
         $stmt = self::$dbh->prepare(self::$modificar_producto);
-        $stmt->bindValue(1, $newDatos[1]);
+        $stmt->bindValue(1, $newDatos[0]);
         $stmt->bindValue(2, $newDatos[2]);
         $stmt->bindValue(3, $newDatos[3]);
-        $stmt->bindValue(4, $newDatos[0]);
+        $stmt->bindValue(4, $newDatos[1]);
 
-        $confirmar = 1;
-
-        if (self::consultarUrlModificar($newDatos[0],$newDatos[1])) { // si al consultar la url te devuelve false...
-            echo "es false consultar datos";
-            if (self::consultar_codigo($newDatos[0])) {
-                //echo "codigo encontrado";
-                //return true;
-
-
-                if (self::consultar_orden($newDatos[0], $newDatos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, 
-                    /* $msg = "El numero de orden ya existe";
-                    CtlVerProductos($msg, 1);*/
-                    echo '<script type="text/javascript">
-                        alert("La Orden ya existe");
-                         </script>';
-                    $confirmar = 0;
-                }
-            }
-        } else {
-            echo '<script type="text/javascript">
-            alert("La Url ya existe");
-            </script>';
-            $confirmar = 0;
+        if ($stmt->execute()) {
+            return true;
         }
-        //return false;
-        // consulto si existe el codigo, si es true...
-
-        echo $confirmar;
-        if ($confirmar == 1) {
-            if ($stmt->execute()) { // si se ejecuta le devolvemos true
-                //echo "aqui";
-                return true;;
-            }
-        } else return false;
-
         return false;
+    }*/
+
+
+    // Actualizar datos producto (boolean)
+    public static function productoUpdate($newDatos): bool
+    {
+        var_dump($newDatos);
+        echo $newDatos[1];
+        $stmt = self::$dbh->prepare("UPDATE videos_web_magento2_pruebas set  prod_codigo = ?, url_video = ?, orden = ? ,
+        activado = ? where url_video = ?");
+        $stmt->bindValue(1, $newDatos[0]); // codigo
+        $stmt->bindValue(2, $newDatos[1], PDO::PARAM_STR); // url 
+        $stmt->bindValue(3, $newDatos[2]); // orden
+        $stmt->bindValue(4, $newDatos[3]); //activo
+        $stmt->bindValue(5, $newDatos[1], PDO::PARAM_STR); //url primary key
+
+
+
+
+        try {
+            $stmt->execute();
+            return true; //
+        } catch (Exception $e) {
+            echo '<script type="text/javascript">
+                alert("Error: No se puede duplicar URL ó URL-ORDEN");
+                </script>';
+            return false;
+        }
     }
+
+
 
 
 
@@ -165,7 +163,9 @@ class ModeloUserDB
     }
 
 
-    //// Añadir producto
+
+
+
     //// Añadir producto
     public static function añadirProducto($datos): bool
     {
@@ -277,15 +277,15 @@ class ModeloUserDB
         //echo $codigo;
         echo "resultado= " . $stmt->rowCount();
         if ($stmt->rowCount() > 0) {
-            echo "  existe resultado";
+            echo "  existe resultado url";
             return true;
-        } else "no existe";
+        } else "no existe url";
         return false; //obtenemos el numero de filas totales.
 
     }
 
     //// Consulto si existe la url del producto
-    public static function consultarUrlModificar($codigo, $url): bool
+    /* public static function consultarUrlModificar($codigo, $url): bool
     {
         var_dump($codigo);
         $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo = ? and url_video = ?"); //creamos la consulta
@@ -297,10 +297,44 @@ class ModeloUserDB
         //echo $codigo;
         echo "resultado= " . $stmt->rowCount();
         if ($stmt->rowCount() == 1) {
-            echo "  existe un resultado";
+            echo "  existe una url, puede modificar <br>";
             return true;
-        } else "no existe resultados";
+        } else "no existe resultados de url <br>";
         return false; //obtenemos el numero de filas totales.
 
+    }*/
+
+
+    //// Consulto si existe la orden del producto indicado
+    public static function consultar_orden_modificar($codigo, $orden): bool
+    {
+
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo =? and orden = ?"); //creamos la consulta
+        $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
+        $stmt->bindValue(2, $orden, PDO::PARAM_INT);
+        echo " soncultar orden <br>";
+        $stmt->execute();
+
+        if ($stmt->rowCount() == 1) {
+            echo "procesando..";
+            return true;
+        } else return false;
+        /*
+        $resultado = $stmt->fetchAll();
+        //Recorremos todos los elementos en busca de un elemento ya existente
+        //echo $codigo;
+        foreach ($resultado as $fila) {
+
+            // le pregunto si el codigo coincide con algun codigo de la tabla de BD
+            if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
+                echo "prod_codigo = " . $fila['prod_codigo'] . "orden = " . $fila["orden"] . " - " . $orden . "<br>";
+                if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
+                    echo "encontrado";
+                    return true;
+                }
+            } //else echo "no";
+        }
+
+        return false; //devolvemos una tabla con todos lo valores de la base de datos*/
     }
 }

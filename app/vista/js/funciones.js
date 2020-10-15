@@ -1,6 +1,6 @@
-function confirmarBorrarProducto(codigo) {
+function confirmarBorrarProducto(url,codigo) {
     if (confirm("¿Quieres eliminar el producto:  " + codigo + "?")) {
-        document.location.href = "?orden=Borrar&id=" + codigo; //llamamos al index y le pasamos un codigo como parametro.
+        document.location.href = "?orden=Borrar&id=" + url; //llamamos al index y le pasamos un codigo como parametro.
     }
 }
 
