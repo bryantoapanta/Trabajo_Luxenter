@@ -41,7 +41,7 @@ class ModeloUserDB
         $min = ($pagina - 1) * $max;
 
         // Genero los datos para la vista
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Limit :min, :max"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas LIMIT :min , :max"); //creamos la consulta
         $stmt->bindValue(':min', $min, PDO::PARAM_INT);
         $stmt->bindValue(':max', $max, PDO::PARAM_INT);
 
@@ -50,9 +50,10 @@ class ModeloUserDB
 
         $resultado = $stmt->fetchAll();
 
-
+        $contador = 0;
+        
         foreach ($resultado as $fila) {
-
+            //echo $fila["prod_codigo"]."<br> ".$contador;
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
             $datosProducto = [
                 $fila['prod_codigo'],
@@ -60,7 +61,8 @@ class ModeloUserDB
                 $fila['orden'],
                 $fila['activado']
             ];
-            $tablaProductos[$fila['prod_codigo']] = $datosProducto;
+            
+            $tablaProductos[$contador++] = $datosProducto;
         }
         return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
     }
@@ -77,9 +79,41 @@ class ModeloUserDB
         $stmt->bindValue(3, $newDatos[3]);
         $stmt->bindValue(4, $newDatos[0]);
 
-        if ($stmt->execute()) {
-            return true;
+        $confirmar = 1;
+
+        if (self::consultarUrlModificar($newDatos[0],$newDatos[1])) { // si al consultar la url te devuelve false...
+            echo "es false consultar datos";
+            if (self::consultar_codigo($newDatos[0])) {
+                //echo "codigo encontrado";
+                //return true;
+
+
+                if (self::consultar_orden($newDatos[0], $newDatos[2])) { //consultamos si existe el numero de orden, si es false se ejecuta, 
+                    /* $msg = "El numero de orden ya existe";
+                    CtlVerProductos($msg, 1);*/
+                    echo '<script type="text/javascript">
+                        alert("La Orden ya existe");
+                         </script>';
+                    $confirmar = 0;
+                }
+            }
+        } else {
+            echo '<script type="text/javascript">
+            alert("La Url ya existe");
+            </script>';
+            $confirmar = 0;
         }
+        //return false;
+        // consulto si existe el codigo, si es true...
+
+        echo $confirmar;
+        if ($confirmar == 1) {
+            if ($stmt->execute()) { // si se ejecuta le devolvemos true
+                //echo "aqui";
+                return true;;
+            }
+        } else return false;
+
         return false;
     }
 
@@ -231,7 +265,7 @@ class ModeloUserDB
     }
 
 
-    //// Consulto si existe el codigo del producto
+    //// Consulto si existe la url del producto a modificar
     public static function consultarUrl($codigo): bool
     {
         var_dump($codigo);
@@ -246,6 +280,26 @@ class ModeloUserDB
             echo "  existe resultado";
             return true;
         } else "no existe";
+        return false; //obtenemos el numero de filas totales.
+
+    }
+
+    //// Consulto si existe la url del producto
+    public static function consultarUrlModificar($codigo, $url): bool
+    {
+        var_dump($codigo);
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo = ? and url_video = ?"); //creamos la consulta
+        $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
+        $stmt->bindValue(2, $url, PDO::PARAM_STR);
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+        //Recorremos todos los elementos en busca de un elemento ya existente
+        //echo $codigo;
+        echo "resultado= " . $stmt->rowCount();
+        if ($stmt->rowCount() == 1) {
+            echo "  existe un resultado";
+            return true;
+        } else "no existe resultados";
         return false; //obtenemos el numero de filas totales.
 
     }

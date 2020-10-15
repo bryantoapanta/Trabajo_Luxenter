@@ -33,14 +33,14 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         ?>
             <tr>
                 <?php
-                echo "<td>$clave</td>";
+                echo "<td>$datoProducto[0]</td>";
                 for ($j = 1; $j < count($datoProducto); $j++) {
                     echo "<td>$datoProducto[$j]</td>";
                 }
                 ?>
 
-                <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1]?>','<?=$clave?>');">&#9998;</a></td>
-                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $clave  ?>');">&#9760;</a></td>
+                <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1]?>','<?=$datoProducto[0]?>');">&#9998;</a></td>
+                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[0]  ?>');">&#9760;</a></td>
 
             </tr>
         <?php } ?>

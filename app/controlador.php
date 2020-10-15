@@ -8,6 +8,7 @@ function CtlVerProductos($msg,$pagina)
     // Obtengo los datos del modelo
     $productos = ModeloUserDB::GetAll($pagina);
     // Invoco la vista
+    //var_dump($productos);
     include_once 'vista/verProductos.php';
     //echo "estas en controlador productos";
 
