@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prueba listado</title>
     <script type="text/javascript" src="app/vista/js/funciones.js"></script>
+    
     <style type="text/css">
+
         #header {
             font-size: 2em;
             text-align: center;
@@ -32,6 +34,11 @@
             padding: 10px;
         }
 
+        #buscador {
+            text-align: center;
+            margin-bottom: 0em;
+        }
+
         div {
             margin-top: 2em;
             margin-bottom: 2em;
@@ -45,6 +52,13 @@
     <div id="header">
         <h1>Videos Web Magento2</h1>
     </div>
+
+    <div id="buscador">
+        &#128270;
+        <input type="text" id="search" placeholder="Introduzca codigo a buscar" >
+        
+    </div>
+
 
 </body>
 
