@@ -19,7 +19,7 @@
               </tr>
               <tr>
                   <td>Orden</td>
-                  <td><input type="number" name="orden_video" required></td>
+                  <td><input type="number" name="orden_video" value="1" required></td>
               </tr>
               <tr>
                   <td>Activado</td>

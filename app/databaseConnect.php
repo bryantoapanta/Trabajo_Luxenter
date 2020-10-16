@@ -91,13 +91,11 @@ class ModeloUserDB
     {
         var_dump($newDatos);
         echo $newDatos[1];
-        $stmt = self::$dbh->prepare("UPDATE videos_web_magento2_pruebas set  prod_codigo = ?, url_video = ?, orden = ? ,
+        $stmt = self::$dbh->prepare("UPDATE videos_web_magento2_pruebas set  orden = ? ,
         activado = ? where url_video = ?");
-        $stmt->bindValue(1, $newDatos[0]); // codigo
-        $stmt->bindValue(2, $newDatos[1], PDO::PARAM_STR); // url 
-        $stmt->bindValue(3, $newDatos[2]); // orden
-        $stmt->bindValue(4, $newDatos[3]); //activo
-        $stmt->bindValue(5, $newDatos[1], PDO::PARAM_STR); //url primary key
+        $stmt->bindValue(1, $newDatos[2]); // codigo
+        $stmt->bindParam(2, $newDatos[3]); // url 
+        $stmt->bindValue(3, $newDatos[1], PDO::PARAM_STR); //url primary key
 
 
 
@@ -107,8 +105,9 @@ class ModeloUserDB
             return true; //
         } catch (Exception $e) {
             echo '<script type="text/javascript">
-                alert("Error: No se puede duplicar URL ó URL-ORDEN");
+                alert("Error: No se puede duplicar ORDEN");
                 </script>';
+                //echo $e->getMessage();
             return false;
         }
     }

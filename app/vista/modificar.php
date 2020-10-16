@@ -13,7 +13,7 @@
               </tr>
               <tr>
                   <td>Url</td>
-                  <td> <input type="text" name="url_video" value="<?= $datos[1] ?>" required></td>
+                  <td> <input type="text" name="url_video" value="<?= $datos[1] ?>" readonly></td>
               </tr>
               <tr>
                   <td>Orden</td>
