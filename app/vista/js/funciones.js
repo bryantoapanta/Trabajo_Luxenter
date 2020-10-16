@@ -19,17 +19,18 @@ function volver() {
 
 //-------------BUSCADOR--------------
 
-document.addEventListener("DOMContentLoaded", buscador,false);
+document.addEventListener("DOMContentLoaded", buscador, false);
 
 function buscador() {
 
-    document.getElementById('search').addEventListener('keypress',buscar);
-    
+    document.getElementById('search').addEventListener('click', buscar);
+
 
 }
 function buscar(e) {
 
-    var palabra = e.target.value;
-    document.location.href = "?orden=Buscar&palabra=" + palabra;// le pasamos la ordena ejecutar y la palabra a buscar
+    var palabra = document.getElementById("palabra").value.toUpperCase();
+    //alert(palabra);
+    document.location.href = "?orden=Buscar&palabra=" + palabra+"&id="+1;// le pasamos la ordena ejecutar y la palabra a buscar
 
 }

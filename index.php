@@ -20,7 +20,7 @@ if (isset($_GET["pagina"])) { // si existe un get pagina
 
 
 if (isset($_GET['orden']) && isset($_GET['id'])) {
-  
+
     switch ($_GET['orden']) {
 
         case "Borrar":
@@ -37,6 +37,11 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
 
         case "Añadir":
             CtlAñadir(); // llamamos a la funcion verProductos.
+            break;
+
+        case "Buscar":
+            
+            CtlBuscar($_GET["palabra"],1); // llamamos a la funcion verProductos.
             break;
 
         case "Actualizar":

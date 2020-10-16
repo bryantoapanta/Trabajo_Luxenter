@@ -54,8 +54,8 @@
     </div>
 
     <div id="buscador">
-        &#128270;
-        <input type="text" id="search" placeholder="Introduzca codigo a buscar" >
+        
+        <input type="text" id="palabra" placeholder="Introduzca codigo a buscar" > <input type="button" id="search" value="&#128270;">
         
     </div>
 

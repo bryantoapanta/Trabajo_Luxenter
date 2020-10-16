@@ -87,3 +87,15 @@ function CtlAñadir()
     var_dump($datos);
  
 }
+
+// Muestro la tabla con los productos
+function CtlBuscar($palabra,$pagina)
+{
+    $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+    // Invoco la vista
+    //var_dump($productos);
+    include_once 'vista/verProductos.php';
+    //echo "estas en controlador productos";
+
+
+}
