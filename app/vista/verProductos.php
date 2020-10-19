@@ -19,10 +19,10 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     <table>
         <tr>
 
-            <th><a id="ordenarXcodigo" href="?ordenar=prod_codigo">Código del Productos</a></th>
-            <th><a id="ordenarXcodigo" href="?ordenar=url_video">Url</a></th>
-            <th>Orden</th>
-            <th>Activado</th>
+            <th><a class="enlaces" href="?ordenar=prod_codigo">Código del Productos</a></th>
+            <th><a class="enlaces" href="?ordenar=url_video">Url</a></th>
+            <th a class="enlaces">Orden</th>
+            <th a class="enlaces">Activado</th>
 
         </tr>
         <?php
@@ -39,17 +39,17 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                 }
                 ?>
 
-                <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9998;</a></td>
-                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9760;</a></td>
+                <td class="modificacion"><a class="enlaces" href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9998;</a></td>
+                <td class="borrador"><a class="enlaces" href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9760;</a></td>
 
             </tr>
         <?php } ?>
     </table>
 
     <div class="paginacion">
-        <a href='index.php?pagina=<?php if ($pagina > 1) {
-                                        echo $pagina - 1;
-                                    } else echo $pagina  ?>
+        <a class="enlaces" href='index.php?pagina=<?php if ($pagina > 1) {
+                                                        echo $pagina - 1;
+                                                    } else echo $pagina  ?>
                                     <?php
                                     if (isset($_GET["ordenar"])) {
                                         echo "&ordenar=" . $_GET["ordenar"];
@@ -57,16 +57,16 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         </a>
 
         <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a href='index.php?pagina=<?php echo $x + 1 ?>
+            <a class="enlaces" href='index.php?pagina=<?php echo $x + 1 ?>
             <?php
             if (isset($_GET["ordenar"])) {
                 echo "&ordenar=" . $_GET["ordenar"];
             } ?>'> <?php echo $x + 1 ?></a>
         <?php endfor ?>
 
-        <a disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
-                                                echo $pagina + 1;
-                                            } else echo $pagina  ?>
+        <a class="enlaces" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
+                                                                echo $pagina + 1;
+                                                            } else echo $pagina  ?>
                                             <?php
                                             if (isset($_GET["ordenar"])) {
                                                 echo "&ordenar=" . $_GET["ordenar"];
@@ -75,7 +75,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     </div>
 
     <div class="añadir">
-        <button><a href="index.php?orden=Añadir&id=0">Añadir</a></button>
+        <button><a class="enlaces" href="index.php?orden=Añadir&id=0">Añadir</a></button>
     </div>
 
 </center>

@@ -75,23 +75,23 @@ class ModeloUserDB
         $max = 10;
         $min = ($pagina - 1) * $max;
 
-        echo "<br>ordenar -> ".$_GET["ordenar"];
+        echo "<br>ordenar -> " . $_GET["ordenar"];
         // Genero los datos para la vista
 
-        if($_GET["ordenar"]=="prod_codigo"){
+        if ($_GET["ordenar"] == "prod_codigo") {
 
             $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
-    
-            
-        } else  if($_GET["ordenar"]=="url_video"){
-    
+
+
+        } else  if ($_GET["ordenar"] == "url_video") {
+
             $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By url_video LIMIT ? , ?"); //creamos la consulta
         }
-       
+
         //$stmt->bindValue(1, "prod_codigo");
         $stmt->bindValue(1, $min, PDO::PARAM_INT);
         $stmt->bindValue(2, $max, PDO::PARAM_INT);
-        
+
 
         $tablaProductos = [];
         $stmt->execute();
@@ -101,7 +101,7 @@ class ModeloUserDB
         $contador = 0;
 
         foreach ($resultado as $fila) {
-            echo $fila["prod_codigo"]."<br> ".$contador;
+            echo $fila["prod_codigo"] . "<br> " . $contador;
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
             $datosProducto = [
                 $fila['prod_codigo'],
@@ -392,25 +392,36 @@ class ModeloUserDB
     {
         $max = 10;
         $min = ($pagina - 1) * $max;
-        echo $min."   ".$max."   "."  pagina -> ".$pagina;
-        // Genero los datos para la vista
-        //$palabra = "%".$palabra."%";
-        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
-       // echo "palabra -> " . $palabra;
-        $stmt->bindValue(1, "%".$palabra."%",PDO::PARAM_STR);
-        $stmt->bindValue(2, "%".$palabra."%", PDO::PARAM_STR);
-        $stmt->bindValue(3, $min,PDO::PARAM_INT);
-        $stmt->bindValue(4, $max,PDO::PARAM_INT);
-        
+        echo $min . "   " . $max . "   " . "  pagina -> " . $pagina;
+       
+        //comprobamos si hay valor en ordenar
+        if (isset($_GET["ordenar"])) {
+
+            if ($_GET["ordenar"] == "prod_codigo") {
+
+                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
+
+
+            } else  if ($_GET["ordenar"] == "url_video") {
+
+                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
+            }
+        } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
+       
+       
+        // echo "palabra -> " . $palabra;
+        $stmt->bindValue(1, "%" . $palabra . "%", PDO::PARAM_STR);
+        $stmt->bindValue(2, "%" . $palabra . "%", PDO::PARAM_STR);
+        $stmt->bindValue(3, $min, PDO::PARAM_INT);
+        $stmt->bindValue(4, $max, PDO::PARAM_INT);
+
 
         $tablaProductos = [];
         try {
             $stmt->execute();
-            
         } catch (Exception $e) {
-            
+
             echo $e->getMessage();
-            
         }
         echo "post";
         $resultado = $stmt->fetchAll();
@@ -438,14 +449,12 @@ class ModeloUserDB
     {
 
         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ?"); //creamos la consulta
-       // echo "palabra -> " . $palabra;
-       $stmt->bindValue(1, "%".$palabra."%",PDO::PARAM_STR);
-       $stmt->bindValue(2, "%".$palabra."%", PDO::PARAM_STR);
+        // echo "palabra -> " . $palabra;
+        $stmt->bindValue(1, "%" . $palabra . "%", PDO::PARAM_STR);
+        $stmt->bindValue(2, "%" . $palabra . "%", PDO::PARAM_STR);
         $stmt->execute(); //la ejecuto.
         $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
 
         return $Total_filas; //devolvemos el valor
     }
-
-
 }

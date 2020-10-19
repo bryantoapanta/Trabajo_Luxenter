@@ -7,16 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magento</title>
     <script type="text/javascript" src="app/vista/js/funciones.js"></script>
-    
-    <style type="text/css">
 
+    <style type="text/css">
         #header {
             font-size: 2em;
             text-align: center;
-            
+
         }
 
-        #header h1 a{
+        #header h1 a {
+
+            text-decoration: none;
+            color: black;
+        }
+
+        .enlaces  {
 
             text-decoration: none;
             color: black;
@@ -61,9 +66,9 @@
     </div>
 
     <div id="buscador">
-        
-        <input type="text" id="palabra" placeholder="Introduzca codigo a buscar" > <input type="button" id="search" value="&#128270;">
-        
+
+        <input type="text" id="palabra" placeholder="Introduzca codigo a buscar"> <input type="button" id="search" value="&#128270;">
+
     </div>
 
 

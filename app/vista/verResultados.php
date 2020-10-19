@@ -4,7 +4,7 @@ include_once "app/databaseConnect.php";
 include_once "principal.php";
 
 $paginas = ceil(ModeloUserDB::obtenerFilasResultados($palabra) / 10); //ceil para redondear un numero. Obtener paginas totales
-echo "pagina ".$pagina;
+echo "pagina " . $pagina;
 
 
 $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -19,10 +19,10 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     <table>
         <tr>
 
-            <th>Código del Productos</th>
-            <th>Url</th>
-            <th>Orden</th>
-            <th>Activado</th>
+            <th><a class="enlaces" href="?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $pagina ?>&ordenar=prod_codigo">Código del Productos</a></th>
+            <th><a class="enlaces" href="?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $pagina ?>&ordenar=url_video">Url</a></th>
+            <th a class="enlaces">Orden</th>
+            <th a class="enlaces">Activado</th>
 
         </tr>
         <?php
@@ -48,17 +48,29 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 
     <div class="paginacion">
         <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php if ($pagina > 1) {
-                                                                            echo $pagina - 1;
-                                                                        } else echo $pagina  ?>'> &#10094;
+                                                                                        echo $pagina - 1;
+                                                                                    } else echo $pagina  ?>
+                                                                                     <?php
+                                                                                        if (isset($_GET["ordenar"])) {
+                                                                                            echo "&ordenar=" . $_GET["ordenar"];
+                                                                                        } ?>'> &#10094;
         </a>
 
         <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $x + 1 ?>'> <?php echo $x + 1 ?></a>
+            <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $x + 1 ?>
+            <?php
+            if (isset($_GET["ordenar"])) {
+                echo "&ordenar=" . $_GET["ordenar"];
+            } ?>'> <?php echo $x + 1 ?></a>
         <?php endfor ?>
 
         <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php if ($pagina < $paginas) {
-                                                                            echo $pagina + 1;
-                                                                        } else echo $pagina  ?>'>&#10095;
+                                                                                        echo $pagina + 1;
+                                                                                    } else echo $pagina  ?>
+                                                                                     <?php
+                                                                                        if (isset($_GET["ordenar"])) {
+                                                                                            echo "&ordenar=" . $_GET["ordenar"];
+                                                                                        } ?>'>&#10095;
         </a>
     </div>
 

@@ -5,18 +5,19 @@ include_once 'app/databaseConnect.php';
 // Muestro la tabla con los productos
 function CtlVerProductos($msg, $pagina)
 {
-    if (isset($_GET["ordenar"])){
-    if($_GET["ordenar"]=="prod_codigo"){
+    if (isset($_GET["ordenar"])) {
+        if ($_GET["ordenar"] == "prod_codigo") {
 
-        echo "codigo";
-        $msg= "Ordenador por Codigo Del Prodcuto";
-        $productos = ModeloUserDB::GetAllOrder($pagina);
-    } else  if($_GET["ordenar"]=="url_video"){
+            echo "codigo";
+            $msg = "Ordenador por Codigo Del Prodcuto";
+            $productos = ModeloUserDB::GetAllOrder($pagina);
+        } else  if ($_GET["ordenar"] == "url_video") {
 
-        echo "url";
-        $msg= "Ordenador por Url";
-        $productos = ModeloUserDB::GetAllOrder($pagina);
-    }} else $productos = ModeloUserDB::GetAll($pagina);
+            echo "url";
+            $msg = "Ordenador por Url";
+            $productos = ModeloUserDB::GetAllOrder($pagina);
+        }
+    } else $productos = ModeloUserDB::GetAll($pagina);
 
     // Obtengo los datos del modelo
     //$productos = ModeloUserDB::GetAll($pagina);
@@ -102,15 +103,31 @@ function CtlAñadir()
 // Muestro la tabla con los productos
 function CtlBuscar($palabra, $pagina)
 {
-    $productos = ModeloUserDB::GetResultados($palabra, $pagina);
+
+    if (isset($_GET["ordenar"])) {
+        if ($_GET["ordenar"] == "prod_codigo") {
+
+            echo "codigo";
+            $msg = "Ordenador por Codigo Del Prodcuto";
+            $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+        } else  if ($_GET["ordenar"] == "url_video") {
+
+            echo "url";
+            $msg = "Ordenador por Url";
+            $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+        }
+    } else {
+        $productos = ModeloUserDB::GetResultados($palabra, $pagina);
+    }
+
     // Invoco la vista
     //var_dump($productos);
     $numResultados = ModeloUserDB::obtenerFilasResultados($palabra);
     if ($numResultados > 0) {
         $msg = "Resultados de " . $palabra . ": " . $numResultados;
         include_once 'vista/verResultados.php';
+    } else  $msg = $msg . "<br>" . "Resultados de " . $palabra . ": " . $numResultados;
 
-    } else  $msg = "Resultados de " . $palabra . ": " . $numResultados;
     include_once 'vista/verResultados.php';
 
     //echo "estas en controlador productos";
