@@ -69,6 +69,54 @@ class ModeloUserDB
 
 
 
+    // Tabla de todos los productos para visualizar por orden
+    public static function GetAllOrder($pagina): array
+    {
+        $max = 10;
+        $min = ($pagina - 1) * $max;
+
+        echo "<br>ordenar -> ".$_GET["ordenar"];
+        // Genero los datos para la vista
+
+        if($_GET["ordenar"]=="prod_codigo"){
+
+            $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
+    
+            
+        } else  if($_GET["ordenar"]=="url_video"){
+    
+            $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By url_video LIMIT ? , ?"); //creamos la consulta
+        }
+       
+        //$stmt->bindValue(1, "prod_codigo");
+        $stmt->bindValue(1, $min, PDO::PARAM_INT);
+        $stmt->bindValue(2, $max, PDO::PARAM_INT);
+        
+
+        $tablaProductos = [];
+        $stmt->execute();
+
+        $resultado = $stmt->fetchAll();
+
+        $contador = 0;
+
+        foreach ($resultado as $fila) {
+            echo $fila["prod_codigo"]."<br> ".$contador;
+            //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
+            $datosProducto = [
+                $fila['prod_codigo'],
+                $fila['url_video'],
+                $fila['orden'],
+                $fila['activado']
+            ];
+
+            $tablaProductos[$contador++] = $datosProducto;
+        }
+        return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
+    }
+
+
+
     // Actualizar datos producto (boolean)
     /* public static function productoUpdate($newDatos): bool
     {

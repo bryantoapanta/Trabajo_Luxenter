@@ -19,8 +19,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     <table>
         <tr>
 
-            <th>Código del Productos</th>
-            <th>Url</th>
+            <th><a id="ordenarXcodigo" href="?ordenar=prod_codigo">Código del Productos</a></th>
+            <th><a id="ordenarXcodigo" href="?ordenar=url_video">Url</a></th>
             <th>Orden</th>
             <th>Activado</th>
 
@@ -49,17 +49,29 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     <div class="paginacion">
         <a href='index.php?pagina=<?php if ($pagina > 1) {
                                         echo $pagina - 1;
-                                    } else echo $pagina  ?>'> &#10094;
-                                    </a>
+                                    } else echo $pagina  ?>
+                                    <?php
+                                    if (isset($_GET["ordenar"])) {
+                                        echo "&ordenar=" . $_GET["ordenar"];
+                                    } ?>'> &#10094;
+        </a>
 
         <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a href='index.php?pagina=<?php echo $x + 1 ?>'> <?php echo $x + 1 ?></a>
+            <a href='index.php?pagina=<?php echo $x + 1 ?>
+            <?php
+            if (isset($_GET["ordenar"])) {
+                echo "&ordenar=" . $_GET["ordenar"];
+            } ?>'> <?php echo $x + 1 ?></a>
         <?php endfor ?>
 
         <a disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
                                                 echo $pagina + 1;
-                                            } else echo $pagina  ?>'>&#10095;
-                                            </a>
+                                            } else echo $pagina  ?>
+                                            <?php
+                                            if (isset($_GET["ordenar"])) {
+                                                echo "&ordenar=" . $_GET["ordenar"];
+                                            } ?>'>&#10095;
+        </a>
     </div>
 
     <div class="añadir">

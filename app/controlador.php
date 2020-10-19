@@ -5,8 +5,21 @@ include_once 'app/databaseConnect.php';
 // Muestro la tabla con los productos
 function CtlVerProductos($msg, $pagina)
 {
+    if (isset($_GET["ordenar"])){
+    if($_GET["ordenar"]=="prod_codigo"){
+
+        echo "codigo";
+        $msg= "Ordenador por Codigo Del Prodcuto";
+        $productos = ModeloUserDB::GetAllOrder($pagina);
+    } else  if($_GET["ordenar"]=="url_video"){
+
+        echo "url";
+        $msg= "Ordenador por Url";
+        $productos = ModeloUserDB::GetAllOrder($pagina);
+    }} else $productos = ModeloUserDB::GetAll($pagina);
+
     // Obtengo los datos del modelo
-    $productos = ModeloUserDB::GetAll($pagina);
+    //$productos = ModeloUserDB::GetAll($pagina);
     // Invoco la vista
     //var_dump($productos);
     include_once 'vista/verProductos.php';
@@ -96,7 +109,7 @@ function CtlBuscar($palabra, $pagina)
     if ($numResultados > 0) {
         $msg = "Resultados de " . $palabra . ": " . $numResultados;
         include_once 'vista/verResultados.php';
-        
+
     } else  $msg = "Resultados de " . $palabra . ": " . $numResultados;
     include_once 'vista/verResultados.php';
 
