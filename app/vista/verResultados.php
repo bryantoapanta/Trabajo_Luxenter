@@ -3,8 +3,8 @@
 include_once "app/databaseConnect.php";
 include_once "principal.php";
 
-$paginas = ceil(ModeloUserDB::obtenerFilas() / 10); //ceil para redondear un numero. Obtener paginas totales
-echo $pagina;
+$paginas = ceil(ModeloUserDB::obtenerFilasResultados($palabra) / 10); //ceil para redondear un numero. Obtener paginas totales
+echo "pagina ".$pagina;
 
 
 $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -47,19 +47,19 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     </table>
 
     <div class="paginacion">
-        <a href='index.php?pagina=<?php if ($pagina > 1) {
-                                        echo $pagina - 1;
-                                    } else echo $pagina  ?>'> &#10094;
-                                    </a>
+        <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php if ($pagina > 1) {
+                                                                            echo $pagina - 1;
+                                                                        } else echo $pagina  ?>'> &#10094;
+        </a>
 
         <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a href='index.php?pagina=<?php echo $x + 1 ?>'> <?php echo $x + 1 ?></a>
+            <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $x + 1 ?>'> <?php echo $x + 1 ?></a>
         <?php endfor ?>
 
-        <a disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
-                                                echo $pagina + 1;
-                                            } else echo $pagina  ?>'>&#10095;
-                                            </a>
+        <a href='index.php?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php if ($pagina < $paginas) {
+                                                                            echo $pagina + 1;
+                                                                        } else echo $pagina  ?>'>&#10095;
+        </a>
     </div>
 
     <div class="añadir">

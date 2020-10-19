@@ -3,7 +3,7 @@
 include_once 'app/databaseConnect.php';
 
 // Muestro la tabla con los productos
-function CtlVerProductos($msg,$pagina)
+function CtlVerProductos($msg, $pagina)
 {
     // Obtengo los datos del modelo
     $productos = ModeloUserDB::GetAll($pagina);
@@ -26,7 +26,7 @@ function CtlBorrar($codigo)
         $msg = "No se pudo borrar el producto.";
     }
 
-    CtlVerProductos($msg,1);
+    CtlVerProductos($msg, 1);
 }
 
 //Pasamos el codigo y los nuevos datos para actualizar el producto.
@@ -53,48 +53,53 @@ function CtlActualizar($datos)
 
 
 
-    CtlVerProductos($msg,1);
+    CtlVerProductos($msg, 1);
 }
 
 function CtlAñadir()
 {
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        
+
         if (isset($_POST['prod_codigo']) && isset($_POST['url_video']) && isset($_POST['orden_video']) && isset($_POST['activado_video'])) { //si los campos  tienen valor
-           
+
             $codigo = $_POST['prod_codigo'];
             $url = $_POST['url_video'];
             $orden = $_POST['orden_video'];
             $activo = $_POST['activado_video'];
-            
+
             $datos = [ //alamcenamos los valores en un array
                 $codigo,
                 $url,
                 $orden,
                 $activo
             ];
-            
+
             if (ModeloUserDB::añadirProducto($datos)) {
                 $msg = "¡Producto añadido con éxito!";
-            } else $msg = "Producto no añadido!";// llamamos a la funcion para añadir productos.
+            } else $msg = "Producto no añadido!"; // llamamos a la funcion para añadir productos.
 
-            CtlVerProductos($msg,1);
+            CtlVerProductos($msg, 1);
         }
-        
     } else  include_once("vista/añadir.php");
-    
+
 
     var_dump($datos);
- 
 }
 
 // Muestro la tabla con los productos
-function CtlBuscar($palabra,$pagina)
+function CtlBuscar($palabra, $pagina)
 {
-    $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+    $productos = ModeloUserDB::GetResultados($palabra, $pagina);
     // Invoco la vista
     //var_dump($productos);
-    include_once 'vista/verProductos.php';
+    $numResultados = ModeloUserDB::obtenerFilasResultados($palabra);
+    if ($numResultados > 0) {
+        $msg = "Resultados de " . $palabra . ": " . $numResultados;
+        include_once 'vista/verResultados.php';
+        
+    } else  $msg = "Resultados de " . $palabra . ": " . $numResultados;
+    include_once 'vista/verResultados.php';
+
     //echo "estas en controlador productos";
 
 

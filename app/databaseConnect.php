@@ -339,18 +339,18 @@ class ModeloUserDB
 
     //--------------------------------BUSCADOR-------------------------
 
-    // Tabla de todos los productos para visualizar
+    // DEVUELVE TODOS LOS PRODUCTOS ENCONTRADOS
     public static function GetResultados($palabra, $pagina): array
     {
         $max = 10;
         $min = ($pagina - 1) * $max;
         echo $min."   ".$max."   "."  pagina -> ".$pagina;
         // Genero los datos para la vista
-        $palabra = "%".$palabra."%";
+        //$palabra = "%".$palabra."%";
         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
        // echo "palabra -> " . $palabra;
-        $stmt->bindValue(1, $palabra,PDO::PARAM_STR);
-        $stmt->bindValue(2, $palabra, PDO::PARAM_STR);
+        $stmt->bindValue(1, "%".$palabra."%",PDO::PARAM_STR);
+        $stmt->bindValue(2, "%".$palabra."%", PDO::PARAM_STR);
         $stmt->bindValue(3, $min,PDO::PARAM_INT);
         $stmt->bindValue(4, $max,PDO::PARAM_INT);
         
@@ -383,4 +383,21 @@ class ModeloUserDB
         }
         return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
     }
+
+
+    // Obtener filas totales del buscador
+    public static function obtenerFilasResultados($palabra)
+    {
+
+        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ?"); //creamos la consulta
+       // echo "palabra -> " . $palabra;
+       $stmt->bindValue(1, "%".$palabra."%",PDO::PARAM_STR);
+       $stmt->bindValue(2, "%".$palabra."%", PDO::PARAM_STR);
+        $stmt->execute(); //la ejecuto.
+        $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+
+        return $Total_filas; //devolvemos el valor
+    }
+
+
 }

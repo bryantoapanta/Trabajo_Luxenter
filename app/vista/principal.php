@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba listado</title>
+    <title>Magento</title>
     <script type="text/javascript" src="app/vista/js/funciones.js"></script>
     
     <style type="text/css">
@@ -13,6 +13,13 @@
         #header {
             font-size: 2em;
             text-align: center;
+            
+        }
+
+        #header h1 a{
+
+            text-decoration: none;
+            color: black;
         }
 
         #aviso {
@@ -50,7 +57,7 @@
 <body>
 
     <div id="header">
-        <h1>Videos Web Magento2</h1>
+        <h1><a href="?orden=Inicio">Videos Web Magento</a></h1>
     </div>
 
     <div id="buscador">

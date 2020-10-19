@@ -31,6 +31,6 @@ function buscar(e) {
 
     var palabra = document.getElementById("palabra").value.toUpperCase();
     //alert(palabra);
-    document.location.href = "?orden=Buscar&palabra=" + palabra+"&id="+1;// le pasamos la ordena ejecutar y la palabra a buscar
+    document.location.href = "?orden=Buscar&palabra="+palabra+"&id="+1+"&pagina="+1;// le pasamos la ordena ejecutar y la palabra a buscar
 
 }
