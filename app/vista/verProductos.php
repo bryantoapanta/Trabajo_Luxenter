@@ -47,7 +47,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     </table>
 
     <div class="paginacion">
-        <a class="enlaces" href='index.php?pagina=<?php if ($pagina > 1) {
+        <a class="" href='index.php?pagina=<?php if ($pagina > 1) {
                                                         echo $pagina - 1;
                                                     } else echo $pagina  ?>
                                     <?php
@@ -57,14 +57,14 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         </a>
 
         <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a class="enlaces" href='index.php?pagina=<?php echo $x + 1 ?>
+            <a class="" href='index.php?pagina=<?php echo $x + 1 ?>
             <?php
             if (isset($_GET["ordenar"])) {
                 echo "&ordenar=" . $_GET["ordenar"];
             } ?>'> <?php echo $x + 1 ?></a>
         <?php endfor ?>
 
-        <a class="enlaces" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
+        <a class="" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
                                                                 echo $pagina + 1;
                                                             } else echo $pagina  ?>
                                             <?php
