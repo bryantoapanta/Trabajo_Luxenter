@@ -101,7 +101,7 @@ class ModeloUserDB
         $contador = 0;
 
         foreach ($resultado as $fila) {
-            echo $fila["prod_codigo"] . "<br> " . $contador;
+            //echo $fila["prod_codigo"] . "<br> " . $contador;
             //almaceno en una tabla todos los valores para posteriormente imprimirlos por pantalla
             $datosProducto = [
                 $fila['prod_codigo'],
@@ -137,8 +137,8 @@ class ModeloUserDB
     // Actualizar datos producto (boolean)
     public static function productoUpdate($newDatos): bool
     {
-        var_dump($newDatos);
-        echo $newDatos[1];
+        //  var_dump($newDatos);
+        // echo $newDatos[1];
         $stmt = self::$dbh->prepare("UPDATE videos_web_magento2_pruebas set  orden = ? ,
         activado = ? where url_video = ?");
         $stmt->bindValue(1, $newDatos[2]); // codigo
@@ -181,7 +181,7 @@ class ModeloUserDB
     //// Modificar un producto (boolean)
     public static function modificarProducto($codigo): array
     {
-        echo "modificar";
+        // echo "modificar";
         $stmt = self::$dbh->prepare(self::$consulta_url_modificar); //creamos la consulta
         $stmt->bindValue(1, $codigo);
         $stmt->execute();
@@ -226,7 +226,7 @@ class ModeloUserDB
         $confirmar = 1;
 
         if (self::consultarUrl($datos[1]) == false) { // si al consultar la url te devuelve false...
-            echo "es false consultar datos";
+            //  echo "es false consultar datos";
             if (self::consultar_codigo($datos[0])) {
                 //echo "codigo encontrado";
                 //return true;
@@ -250,7 +250,7 @@ class ModeloUserDB
         //return false;
         // consulto si existe el codigo, si es true...
 
-        echo $confirmar;
+        // echo $confirmar;
         if ($confirmar == 1) {
             if ($stmt->execute()) { // si se ejecuta le devolvemos true
                 //echo "aqui";
@@ -275,8 +275,8 @@ class ModeloUserDB
             /* var_dump($fila["prod_codigo"]);echo "<br>";
             var_dump($codigo);echo "<br>";*/
             if ($fila['prod_codigo'] == $codigo) { //utilizamos strcmp para comparar ambos strings
-                echo "codigo bd = " . $fila["prod_codigo"] . " - " . $codigo . "<br>";
-                echo " CODIGO ENCONTRADO <br>";
+                // echo "codigo bd = " . $fila["prod_codigo"] . " - " . $codigo . "<br>";
+                // echo " CODIGO ENCONTRADO <br>";
                 return true;
             }
         }
@@ -300,9 +300,9 @@ class ModeloUserDB
 
             // le pregunto si el codigo coincide con algun codigo de la tabla de BD
             if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
-                echo "prod_codigo = " . $fila['prod_codigo'] . "orden = " . $fila["orden"] . " - " . $orden . "<br>";
+                //  echo "prod_codigo = " . $fila['prod_codigo'] . "orden = " . $fila["orden"] . " - " . $orden . "<br>";
                 if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
-                    echo "encontrado";
+                    //  echo "encontrado";
                     return true;
                 }
             } //else echo "no";
@@ -315,16 +315,16 @@ class ModeloUserDB
     //// Consulto si existe la url del producto a modificar
     public static function consultarUrl($codigo): bool
     {
-        var_dump($codigo);
+        // var_dump($codigo);
         $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where url_video = ?"); //creamos la consulta
         $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
         $stmt->execute();
         $resultado = $stmt->fetchAll();
         //Recorremos todos los elementos en busca de un elemento ya existente
         //echo $codigo;
-        echo "resultado= " . $stmt->rowCount();
+        // echo "resultado= " . $stmt->rowCount();
         if ($stmt->rowCount() > 0) {
-            echo "  existe resultado url";
+            //   echo "  existe resultado url";
             return true;
         } else "no existe url";
         return false; //obtenemos el numero de filas totales.
@@ -359,11 +359,11 @@ class ModeloUserDB
         $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo =? and orden = ?"); //creamos la consulta
         $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
         $stmt->bindValue(2, $orden, PDO::PARAM_INT);
-        echo " soncultar orden <br>";
+        //echo " soncultar orden <br>";
         $stmt->execute();
 
         if ($stmt->rowCount() == 1) {
-            echo "procesando..";
+            //  echo "procesando..";
             return true;
         } else return false;
         /*
@@ -392,8 +392,8 @@ class ModeloUserDB
     {
         $max = 10;
         $min = ($pagina - 1) * $max;
-        echo $min . "   " . $max . "   " . "  pagina -> " . $pagina;
-       
+        //echo $min . "   " . $max . "   " . "  pagina -> " . $pagina;
+
         //comprobamos si hay valor en ordenar
         if (isset($_GET["ordenar"])) {
 
@@ -407,8 +407,8 @@ class ModeloUserDB
                 $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
             }
         } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
-       
-       
+
+
         // echo "palabra -> " . $palabra;
         $stmt->bindValue(1, "%" . $palabra . "%", PDO::PARAM_STR);
         $stmt->bindValue(2, "%" . $palabra . "%", PDO::PARAM_STR);
@@ -423,7 +423,7 @@ class ModeloUserDB
 
             echo $e->getMessage();
         }
-        echo "post";
+        //echo "post";
         $resultado = $stmt->fetchAll();
 
         $contador = 0;

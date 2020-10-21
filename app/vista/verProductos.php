@@ -4,7 +4,7 @@ include_once "app/databaseConnect.php";
 include_once "principal.php";
 
 $paginas = ceil(ModeloUserDB::obtenerFilas() / 10); //ceil para redondear un numero. Obtener paginas totales
-echo $pagina;
+//echo $pagina;
 
 
 $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +35,9 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                 <?php
                 echo "<td>$datoProducto[0]</td>";
                 for ($j = 1; $j < count($datoProducto); $j++) {
-                    echo "<td>$datoProducto[$j]</td>";
+
+                    if ($j==1){echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";}
+                    else echo "<td>$datoProducto[$j]</td>";
                 }
                 ?>
 

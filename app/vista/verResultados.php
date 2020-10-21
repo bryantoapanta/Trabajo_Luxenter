@@ -4,7 +4,7 @@ include_once "app/databaseConnect.php";
 include_once "principal.php";
 
 $paginas = ceil(ModeloUserDB::obtenerFilasResultados($palabra) / 10); //ceil para redondear un numero. Obtener paginas totales
-echo "pagina " . $pagina;
+//echo "pagina " . $pagina;
 
 
 $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -35,12 +35,15 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                 <?php
                 echo "<td>$datoProducto[0]</td>";
                 for ($j = 1; $j < count($datoProducto); $j++) {
-                    echo "<td>$datoProducto[$j]</td>";
+
+                    if ($j==1){echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";}
+                    else echo "<td>$datoProducto[$j]</td>";
+                   
                 }
                 ?>
 
-                <td class="modificacion"><a href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9998;</a></td>
-                <td class="borrador"><a href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9760;</a></td>
+                <td class="modificacion"><a href="#" class="enlaces" onclick="confirmarRenombrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9998;</a></td>
+                <td class="borrador"><a href="#" class="enlaces" onclick="confirmarBorrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9760;</a></td>
 
             </tr>
         <?php } ?>
@@ -75,7 +78,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     </div>
 
     <div class="añadir">
-        <button><a href="index.php?orden=Añadir&id=0">Añadir</a></button>
+        <button><a class="enlaces" href="index.php?orden=Añadir&id=0">Añadir</a></button>
     </div>
 
 </center>

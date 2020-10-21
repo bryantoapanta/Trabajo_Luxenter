@@ -8,12 +8,12 @@ function CtlVerProductos($msg, $pagina)
     if (isset($_GET["ordenar"])) {
         if ($_GET["ordenar"] == "prod_codigo") {
 
-            echo "codigo";
+           // echo "codigo";
             $msg = "Ordenador por Codigo Del Prodcuto";
             $productos = ModeloUserDB::GetAllOrder($pagina);
         } else  if ($_GET["ordenar"] == "url_video") {
 
-            echo "url";
+            //echo "url";
             $msg = "Ordenador por Url";
             $productos = ModeloUserDB::GetAllOrder($pagina);
         }
@@ -46,10 +46,10 @@ function CtlBorrar($codigo)
 //Pasamos el codigo y los nuevos datos para actualizar el producto.
 function CtlModificar($codigo)
 {
-    var_dump($codigo);
+  //  var_dump($codigo);
     $datos = ModeloUserDB::modificarProducto($codigo);
 
-    var_dump($datos);
+   // var_dump($datos);
     include_once("vista/modificar.php");
 }
 
@@ -97,7 +97,7 @@ function CtlAñadir()
     } else  include_once("vista/añadir.php");
 
 
-    var_dump($datos);
+   //var_dump($datos);
 }
 
 // Muestro la tabla con los productos
@@ -107,12 +107,12 @@ function CtlBuscar($palabra, $pagina)
     if (isset($_GET["ordenar"])) {
         if ($_GET["ordenar"] == "prod_codigo") {
 
-            echo "codigo";
+           // echo "codigo";
             $msg = "Ordenador por Codigo Del Prodcuto";
             $productos = ModeloUserDB::GetResultados($palabra,$pagina);
         } else  if ($_GET["ordenar"] == "url_video") {
 
-            echo "url";
+            //echo "url";
             $msg = "Ordenador por Url";
             $productos = ModeloUserDB::GetResultados($palabra,$pagina);
         }
