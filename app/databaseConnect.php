@@ -75,7 +75,7 @@ class ModeloUserDB
         $max = 10;
         $min = ($pagina - 1) * $max;
 
-        echo "<br>ordenar -> " . $_GET["ordenar"];
+        //echo "<br>ordenar -> " . $_GET["ordenar"];
         // Genero los datos para la vista
 
         if ($_GET["ordenar"] == "prod_codigo") {
