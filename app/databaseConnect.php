@@ -457,4 +457,70 @@ class ModeloUserDB
 
         return $Total_filas; //devolvemos el valor
     }
+
+
+    // EXPORTAR A EXEL
+    public static function cargarDatos()
+    {
+        $stmt = self::$dbh->prepare("Select prod_codigo , url_video , orden , activado from videos_web_magento2 "); //creamos la consulta
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+
+        $tabla_videos = [];
+        $tabla_videos[] = [
+            'prod_codigo',
+            'url_video',
+            'orden',
+            'activado'
+        ];
+
+        foreach ($resultado as $fila) {
+
+            $tabla_videos[$fila['prod_codigo']] = [
+                $fila['prod_codigo'],
+                $fila['url_video'],
+                $fila['orden'],
+                $fila['activado']
+            ];
+        }
+        return $tabla_videos; //devolvemos una tabla con todos lo valores de la base de datos
+
+    }
+
+
+
+    public static function exportarExel($datos)
+    {
+        if (!empty($datos)) {
+
+            $filename = "Videos_Web_Magento2.xls";
+
+            header("Content-Type: application/vnd.ms-excel");
+
+            header("Content-Disposition: attachment; filename=" . $filename);
+
+
+
+           // $mostrar_columnas = false;
+
+
+
+            foreach ($datos as $videos) {
+
+                /*  if (!$mostrar_columnas) {
+
+                   // echo implode("\t", array_keys($videos["prod_codigo"] . "\n";
+
+                    $mostrar_columnas = true;
+                }*/
+
+                echo implode("\t", array_values($videos)) . "\n";
+
+                /* } else {
+
+            echo "No hay datos a exportar";*/
+            }
+            exit;
+        }
+    }
 }

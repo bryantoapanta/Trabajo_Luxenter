@@ -23,6 +23,10 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
 
     switch ($_GET['orden']) {
 
+        case "Exportar":
+            CtlExportar(); // llamamos a la funcion borrar y le pasamos el codigo del producto.
+            break;
+
         case "Borrar":
             CtlBorrar($_GET['id']); // llamamos a la funcion borrar y le pasamos el codigo del producto.
             break;
@@ -41,7 +45,7 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
 
         case "Buscar":
             //echo "buscar";
-            CtlBuscar($_GET["palabra"],$_GET["pagina"]); // llamamos a la funcion verProductos. Le pasamos la pagina y la palabra 
+            CtlBuscar($_GET["palabra"], $_GET["pagina"]); // llamamos a la funcion verProductos. Le pasamos la pagina y la palabra 
             break;
 
         case "Actualizar":

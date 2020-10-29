@@ -2,7 +2,7 @@
 <html>
 
 <head>
-
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magento</title>
@@ -21,7 +21,7 @@
             color: black;
         }
 
-        .enlaces  {
+        .enlaces {
 
             text-decoration: none;
             color: black;

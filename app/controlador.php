@@ -134,3 +134,13 @@ function CtlBuscar($palabra, $pagina)
 
 
 }
+
+function CtlExportar()
+{
+
+   $datos = ModeloUserDB::cargarDatos();
+   ModeloUserDB::exportarExel($datos);
+
+
+}
+

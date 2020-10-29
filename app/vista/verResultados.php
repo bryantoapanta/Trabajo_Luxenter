@@ -16,6 +16,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 <div id='aviso'><b><?= (isset($msg)) ? $icon_alert . $msg : "" ?></b></div>
 
 <center>
+    
+
     <table>
         <tr>
 
@@ -36,9 +38,9 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                 echo "<td>$datoProducto[0]</td>";
                 for ($j = 1; $j < count($datoProducto); $j++) {
 
-                    if ($j==1){echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";}
-                    else echo "<td>$datoProducto[$j]</td>";
-                   
+                    if ($j == 1) {
+                        echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
+                    } else echo "<td>$datoProducto[$j]</td>";
                 }
                 ?>
 
