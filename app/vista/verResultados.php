@@ -24,10 +24,10 @@ if (isset($msg) && $msg!=""){
     <table>
         <tr>
 
-            <th><a class="enlaces" href="?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $pagina ?>&ordenar=prod_codigo">Código del Productos</a></th>
+            <th><a class="enlaces" href="?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $pagina ?>&ordenar=prod_codigo">Código</a></th>
             <th><a class="enlaces" href="?orden=Buscar&palabra=<?php echo $palabra ?>&id=0&pagina=<?php echo $pagina ?>&ordenar=url_video">Url</a></th>
             <th a class="enlaces">Orden</th>
-            <th a class="enlaces">Activado</th>
+            <th a class="enlaces">Estado</th>
 
         </tr>
         <?php

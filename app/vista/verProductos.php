@@ -31,10 +31,10 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
     <table>
         <tr>
 
-            <th><a class="enlaces" href="?ordenar=prod_codigo">Código del Productos</a></th>
+            <th><a class="enlaces" href="?ordenar=prod_codigo">Código</a></th>
             <th><a class="enlaces" href="?ordenar=url_video">Url</a></th>
             <th a class="enlaces">Orden</th>
-            <th a class="enlaces">Activado</th>
+            <th a class="enlaces">Estado</th>
 
         </tr>
         <?php
