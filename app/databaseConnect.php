@@ -523,4 +523,17 @@ class ModeloUserDB
             exit;
         }
     }
+
+
+     // Obtener filas totales del buscador
+     public static function obtenerTotalVideos()
+     {
+ 
+         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2"); //creamos la consulta
+         // echo "palabra -> " . $palabra;
+         $stmt->execute(); //la ejecuto.
+         $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+ 
+         return $Total_filas; //devolvemos el valor
+     }
 }

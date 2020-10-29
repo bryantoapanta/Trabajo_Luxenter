@@ -11,9 +11,12 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 ...
 </svg>';
 
+if (isset($msg) && $msg!=""){
 
-?>
-<div id='aviso'><b><?= (isset($msg)) ? $icon_alert . $msg : "" ?></b></div>
+ echo "<div id='aviso'><b>".$icon_alert . $msg ."</b></div>";
+ } else echo "";
+ 
+ ?>
 
 <center>
     

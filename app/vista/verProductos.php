@@ -12,8 +12,9 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 </svg>';
 
 
+
 ?>
-<div id='aviso'><b><?= (isset($msg)) ? $icon_alert . $msg : "" ?></b></div>
+
 
 <center>
 
@@ -21,6 +22,12 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         <button onclick="confirmarExportar()">Exportar a Exel</button>
     </div>
 
+    <?php
+    if (isset($msg) && $msg != "") {
+
+        echo "<div id='aviso'><b>" . $icon_alert . $msg . "</b></div>";
+    } else echo "<div id='aviso'><b> Videos Totales: " . ModeloUserDB::obtenerTotalVideos() . "</b></div>";
+    ?>
     <table>
         <tr>
 
@@ -43,7 +50,17 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 
                     if ($j == 1) {
                         echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
-                    } else echo "<td>$datoProducto[$j]</td>";
+                    }
+                    if ($j == 3) {
+                        if ($datoProducto[3] == 0) {
+                            echo "<td>Desactivado</td>";
+                        } else  echo "<td>Activado</td>";
+                    }
+
+                    if ($j == 2) {
+
+                        echo "<td>$datoProducto[2]</td>";
+                    }
                 }
                 ?>
 
