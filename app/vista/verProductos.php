@@ -54,7 +54,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                             for ($j = 1; $j < count($datoProducto); $j++) {
 
                                 if ($j == 1) {
-                                    echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
+                                    echo "<td><a target='_blank' href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
                                 }
                                 if ($j == 3) {
                                     if ($datoProducto[3] == 0) {
@@ -69,8 +69,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                             }
                             ?>
 
-                            <td class="modificacion" value="<?= $datoProducto[1] ?>">&#9998;</a></td>
-                            <td class="borrador" value="<?= $datoProducto[1] ?>">&#9760;</a></td>
+                            <td class="modificacion puntero" value="<?= $datoProducto[1] ?>">&#9998;</a></td>
+                            <td class="borrador puntero" value="<?= $datoProducto[1] ?>">&#9760;</a></td>
 
                         </tr>
                     <?php } ?>

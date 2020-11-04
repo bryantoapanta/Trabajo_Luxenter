@@ -58,9 +58,10 @@ $(document).on("click", ".añadir", (function () {
     })
 
         .done(function (resultado) {
-
+            $(".container").addClass('disabledbutton');//le añado una clase donde inhabilito las funciones del div
+            $(".container").fadeTo('slow', .1);//oscurecemos el div 
             $("#div_modificar").html(resultado); //en el div #resultado le metemos lo que nos devuelva el php
-            ;
+            $("#div_modificar").css("top", "15vh");;
         });
 
 }
@@ -95,9 +96,10 @@ $(document).on("click", ".modificacion", (function () {
     })
 
         .done(function (resultado) {
-
+            $(".container").addClass('disabledbutton');//le añado una clase donde inhabilito las funciones del div
+            $(".container").fadeTo('slow', .1);//oscurecemos el div 
             $("#div_modificar").html(resultado); //en el div #resultado le metemos lo que nos devuelva el php
-            ;
+            $("#div_modificar").css("top", "15vh");;
         });
 
 }
@@ -108,7 +110,7 @@ $(document).on("click", ".modificacion", (function () {
 //FUNCION BORRAR
 
 $(document).on("click", ".borrador", (function () {
-    if (confirm("¿Quieres eliminar el producto:  " +  $(this).attr("value") + "?")) {
+    if (confirm("¿Quieres eliminar el producto:  " + $(this).attr("value") + "?")) {
         $.ajax({
             url: '?orden=Borrar', //llamamos a la funcion
             type: 'POST', //se lo pasamos por POST

@@ -37,7 +37,7 @@ include_once "cabecera.php";
         </div>
 
         <div class="text-center">
-            <input type='submit' class="btn btn-success" value='Añadir'>
+            <input type='submit' class="btn btn-success" value='Modificar'>
         </div>
 
 
