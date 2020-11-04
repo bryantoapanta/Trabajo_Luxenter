@@ -18,9 +18,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 
 <center>
 
-    <div class="exportar">
-        <button onclick="confirmarExportar()">Exportar a Exel</button>
-    </div>
+
 
     <?php
     if (isset($msg) && $msg != "") {
@@ -28,79 +26,106 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         echo "<div id='aviso'><b>" . $icon_alert . $msg . "</b></div>";
     } else echo "<div id='aviso'><b> Videos Totales: " . ModeloUserDB::obtenerTotalVideos() . "</b></div>";
     ?>
-    <table>
-        <tr>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
 
-            <th><a class="enlaces" href="?ordenar=prod_codigo">Código</a></th>
-            <th><a class="enlaces" href="?ordenar=url_video">Url</a></th>
-            <th a class="enlaces">Orden</th>
-            <th a class="enlaces">Estado</th>
+                            <th><a class="enlaces" href="?ordenar=prod_codigo">Código</a></th>
+                            <th><a class="enlaces" href="?ordenar=url_video">Url</a></th>
+                            <th a class="enlaces">Orden</th>
+                            <th a class="enlaces">Estado</th>
+                            <th a class="enlaces">Modificar</th>
+                            <th a class="enlaces">Eliminar</th>
 
-        </tr>
-        <?php
+                        </tr>
+                    </thead>
+                    <?php
 
-        // Foreach para imprimir todos los datos de la tabla
+                    // Foreach para imprimir todos los datos de la tabla
 
-        foreach ($productos as $clave => $datoProducto) {
-        ?>
-            <tr>
-                <?php
-                echo "<td>$datoProducto[0]</td>";
-                for ($j = 1; $j < count($datoProducto); $j++) {
+                    foreach ($productos as $clave => $datoProducto) {
+                    ?>
+                        <tr>
+                            <?php
+                            echo "<td>$datoProducto[0]</td>";
+                            for ($j = 1; $j < count($datoProducto); $j++) {
 
-                    if ($j == 1) {
-                        echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
-                    }
-                    if ($j == 3) {
-                        if ($datoProducto[3] == 0) {
-                            echo "<td>Desactivado</td>";
-                        } else  echo "<td>Activado</td>";
-                    }
+                                if ($j == 1) {
+                                    echo "<td><a href='$datoProducto[1]'>$datoProducto[$j]</a></td>";
+                                }
+                                if ($j == 3) {
+                                    if ($datoProducto[3] == 0) {
+                                        echo "<td>Desactivado</td>";
+                                    } else  echo "<td>Activado</td>";
+                                }
 
-                    if ($j == 2) {
+                                if ($j == 2) {
 
-                        echo "<td>$datoProducto[2]</td>";
-                    }
-                }
-                ?>
+                                    echo "<td>$datoProducto[2]</td>";
+                                }
+                            }
+                            ?>
 
-                <td class="modificacion"><a class="enlaces" href="#" onclick="confirmarRenombrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9998;</a></td>
-                <td class="borrador"><a class="enlaces" href="#" onclick="confirmarBorrarProducto('<?= $datoProducto[1] ?>','<?= $datoProducto[0] ?>');">&#9760;</a></td>
+                            <td class="modificacion" value="<?= $datoProducto[1] ?>">&#9998;</a></td>
+                            <td class="borrador" value="<?= $datoProducto[1] ?>">&#9760;</a></td>
 
-            </tr>
-        <?php } ?>
-    </table>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
 
-    <div class="paginacion">
-        <a class="" href='index.php?pagina=<?php if ($pagina > 1) {
-                                                echo $pagina - 1;
-                                            } else echo $pagina  ?>
+
+        <div class="row">
+            <div class="paginacion col-4 offset-lg-4 offset-sm-3 offset-1">
+                <ul class="pagination ">
+                    <li class="page-item ">
+                        <a class="page-link" href='index.php?pagina=<?php if ($pagina > 1) {
+                                                                        echo $pagina - 1;
+                                                                    } else echo $pagina  ?>
                                     <?php
                                     if (isset($_GET["ordenar"])) {
                                         echo "&ordenar=" . $_GET["ordenar"];
                                     } ?>'> &#10094;
-        </a>
+                        </a>
+                    </li>
 
-        <?php for ($x = 0; $x < $paginas; $x++) : ?>
-            <a class="" href='index.php?pagina=<?php echo $x + 1 ?>
+
+
+                    <?php for ($x = 0; $x < $paginas; $x++) : ?>
+                        <li class="page-item <?php if ($pagina == $x + 1) {
+                                                    echo "active";
+                                                } ?>">
+                            <a class="page-link" href='index.php?pagina=<?php echo $x + 1 ?>
             <?php
-            if (isset($_GET["ordenar"])) {
-                echo "&ordenar=" . $_GET["ordenar"];
-            } ?>'> <?php echo $x + 1 ?></a>
-        <?php endfor ?>
+                        if (isset($_GET["ordenar"])) {
+                            echo "&ordenar=" . $_GET["ordenar"];
+                        } ?>'> <?php echo $x + 1 ?></a></li>
+                    <?php endfor ?>
 
-        <a class="" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
-                                                        echo $pagina + 1;
-                                                    } else echo $pagina  ?>
+
+                    <li class="page-item ">
+                        <a class="page-link" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
+                                                                                    echo $pagina + 1;
+                                                                                } else echo $pagina  ?>
                                             <?php
                                             if (isset($_GET["ordenar"])) {
                                                 echo "&ordenar=" . $_GET["ordenar"];
                                             } ?>'>&#10095;
-        </a>
-    </div>
 
-    <div class="añadir">
-        <button><a class="enlaces" href="index.php?orden=Añadir&id=0">Añadir</a></button>
-    </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-</center>
+        </div>
+
+        <div>
+            <button class=" añadir btn btn-success añadirElemento ">Añadir</button>
+            <button class=" exportar btn btn-info">Exportar a Exel</button>
+        </div>
+
+    </div>

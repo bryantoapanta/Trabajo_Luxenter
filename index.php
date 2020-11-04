@@ -15,11 +15,20 @@ if (isset($_GET["pagina"])) { // si existe un get pagina
     $pagina = $_GET["pagina"];
 } else $pagina = 1; //parametro para saber la pagina e imprimir los productos por cada pagina.
 
+/*
+echo "accion -" .$_GET['orden'];
+echo "<br> id - ".$_POST['id'];
+var_dump(isset($_GET['orden']) && isset($_POST['id']));*/
 
 
 
+if (  (isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) && isset($_GET['id']))              ) {
 
-if (isset($_GET['orden']) && isset($_GET['id'])) {
+
+
+  //echo $_GET["orden"];
+  $orden=$_GET['orden'];
+
 
     switch ($_GET['orden']) {
 
@@ -28,11 +37,12 @@ if (isset($_GET['orden']) && isset($_GET['id'])) {
             break;
 
         case "Borrar":
-            CtlBorrar($_GET['id']); // llamamos a la funcion borrar y le pasamos el codigo del producto.
+            CtlBorrar($_POST["id"]); // llamamos a la funcion borrar y le pasamos el codigo del producto.
             break;
 
         case "Modificar":
-            CtlModificar($_GET['id']); // llamamos a la funcion modificar y le pasamos el codigo del producto.
+            //echo "aqui";
+            CtlModificar($_POST["id"]); // llamamos a la funcion modificar y le pasamos el codigo del producto.
             break;
 
         case "Inicio":

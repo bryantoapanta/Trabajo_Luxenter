@@ -1,0 +1,135 @@
+
+        #header {
+            
+            margin-top: 1em;
+            margin-bottom: 1em;;
+
+        }
+
+        #header h1 a {
+
+            text-decoration: none;
+            color: black;
+            font-size: 2em;
+        }
+
+        .enlaces {
+
+            text-decoration: none;
+            color: white;
+        }
+
+        #aviso {
+
+            text-align: center;
+            color: red;
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
+
+
+
+      
+        
+         /* DIV DE BUSQUEDA*/
+        #resultado {
+            
+            position: relative;
+            
+            width: 100vw;
+            
+            
+
+             
+        }
+
+        .tabla{
+           
+            position: absolute;
+            z-index: 1;
+            border-collapse: collapse;
+            border-bottom-left-radius: 1em; 
+            border-bottom-right-radius: 1em; 
+
+            width:18.2vw;
+            background: white;
+            box-shadow: 2px 2px 5px #999;
+            
+
+            
+
+        }
+        .tabla td, .tabla th{
+           width: 2vw;
+                              
+        }
+
+      
+         /* DIV DE MODIFICAR*/
+
+         #div_modificar {
+           /* vertical-align: middle;*/
+            position: fixed;
+            z-index: 1;
+            left:0%;
+            top: 15vh;
+            background-color: white;
+            box-shadow: 15px 10px 1000px #999;
+        }
+
+        #formulario{
+            
+            
+            
+            height: auto;
+            margin-top: 3vh;
+            margin-bottom: 3vh;
+            
+            
+            
+
+        }
+
+        .cancelar{
+
+            float: right;
+            color: #852D1A;
+            box-shadow: 5px 5px 10px #999;
+
+        }
+
+        .cancelar:hover{
+
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+
+        /*DESABILITAR DIV*/
+        .disabledbutton { pointer-events: none; opacity: 0.4; } 
+
+        /**------------AÑADIR---------------/*/
+
+        .añadir img{
+
+            width: 1vw;
+        }
+        .iconos{
+            font-size: 1px;
+        }
+
+
+        /**NOMBRE_ID*--------------------------*/
+
+        .nombre_id{
+
+            text-align: left;
+        }
+
+
+        /*DESABILITAR FORMULARIO CONEXION*/
+        /*.disabled { } 
+
+        .puntero:hover { cursor: pointer; } 
+*/

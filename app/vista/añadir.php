@@ -1,38 +1,49 @@
   <?php
-    include_once "databaseConnect.php";
-    include_once "principal.php";
+    include_once "cabecera.php";
     ?>
 
-  <center>
-      <h3>AÑADIR UN NUEVO PRODUCTO</h3>
-      <form name='añadir' method="POST" action="index.php?orden=Añadir&id=0">
 
-          <table id="fmodificar">
-              <tr>
-                  <td>Codigo</td>
-                  <td><input type="text" name="prod_codigo" value="<?php $caracteres = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
-                                                                    echo substr(str_shuffle($caracteres), 0, 8); ?>"></td>
-              </tr>
-              <tr>
-                  <td>Url</td>
-                  <td><input type="text" name="url_video" required></td>
-              </tr>
-              <tr>
-                  <td>Orden</td>
-                  <td><input type="number" name="orden_video" value="1" required></td>
-              </tr>
-              <tr>
-                  <td>Activado</td>
-                  <td><select name="activado_video" required>
-                          <option value="0">Desactivado</option>
-                          <option value="1">Activado</option>
-                      </select> </td>
-              </tr>
+  <button class="btn btn-outline-light mt-3 cancelar" onclick="volver()">X</button>
 
-          </table>
+  <div id="formulario" class="col-8 offset-2">
 
-          <p><input type='button' name="orden" value='Volver' onclick="volver()">
-              <input type='submit' value='Añadir'>
-          </p>
+      <div class="titulo_modificar text-center ">
+          <h3>AÑADIR NUEVO ELEMENTO</h3>
+      </div>
+
+      <form name='añadir' method="POST" action="index.php?orden=Añadir">
+
+          <div class="form-group">
+              <label for="Codigo">Codigo</label>
+              <input type="text" class="form-control disabled" name="prod_codigo" value="<?php $caracteres = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
+                                                                                            echo substr(str_shuffle($caracteres), 0, 8); ?>">
+          </div>
+
+          <div class="form-group">
+              <label for="Url">Url</label>
+              <input type="text" class="form-control disabled" name="url_video" value="">
+          </div>
+
+          <div class="form-group">
+              <label for="Orden">Orden</label>
+              <input type="number" class="form-control disabled" name="orden_video" value="<?= $datos[2] ?>">
+          </div>
+
+          <div class="form-group">
+              <label for="Activado">Activado</label>
+              <select name="activado_video" class="form-control" required>
+                  <option value="0">Desactivado</option>
+                  <option value="1">Activado</option>
+              </select> </td>
+          </div>
+
+          <div class="text-center">
+              <input type='submit' class="btn btn-success" value='Añadir'>
+          </div>
+
+
+          <input type="hidden" value="0" name="id">
+          
+
       </form>
-  </center>
+  </div>

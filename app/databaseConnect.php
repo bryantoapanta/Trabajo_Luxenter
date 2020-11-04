@@ -7,14 +7,12 @@ class ModeloUserDB
 
     private static $dbh = null;
 
-    private static $añadir_producto = "INSERT INTO videos_web_magento2 (prod_codigo, url_video, orden, activado)
+    private static $añadir_producto = "INSERT INTO videos_web_magento2_pruebas (prod_codigo, url_video, orden, activado)
     VALUES (?, ?, ?, ?)";
 
-    private static $consulta_url_modificar = "SELECT * from videos_web_magento2 where url_video = ?";
-    private static $consulta_orden = "SELECT * from videos_web_magento2_pruebas where orden = ?";
-    private static $borrar_producto = "DELETE from videos_web_magento2 where url_video = ?";
-    private static $modificar_producto = "UPDATE videos_web_magento2_pruebas set  prod_codigo = ?,url_video= ?, orden = ? ,
-    activado = ? where url_video = ?";
+    private static $consulta_url_modificar = "SELECT * from videos_web_magento2_pruebas where url_video = ?";
+    private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where url_video = ?";
+    
 
 
     public static function init()
@@ -41,7 +39,7 @@ class ModeloUserDB
         $min = ($pagina - 1) * $max;
 
         // Genero los datos para la vista
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2 LIMIT :min , :max"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas LIMIT :min , :max"); //creamos la consulta
         $stmt->bindValue(':min', $min, PDO::PARAM_INT);
         $stmt->bindValue(':max', $max, PDO::PARAM_INT);
 
@@ -80,12 +78,12 @@ class ModeloUserDB
 
         if ($_GET["ordenar"] == "prod_codigo") {
 
-            $stmt = self::$dbh->prepare("Select * from videos_web_magento2 Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
+            $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
 
 
         } else  if ($_GET["ordenar"] == "url_video") {
 
-            $stmt = self::$dbh->prepare("Select * from videos_web_magento2 Order By url_video LIMIT ? , ?"); //creamos la consulta
+            $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas Order By url_video LIMIT ? , ?"); //creamos la consulta
         }
 
         //$stmt->bindValue(1, "prod_codigo");
@@ -139,7 +137,7 @@ class ModeloUserDB
     {
         //  var_dump($newDatos);
         // echo $newDatos[1];
-        $stmt = self::$dbh->prepare("UPDATE videos_web_magento2 set  orden = ? ,
+        $stmt = self::$dbh->prepare("UPDATE videos_web_magento2_pruebas set  orden = ? ,
         activado = ? where url_video = ?");
         $stmt->bindValue(1, $newDatos[2]); // codigo
         $stmt->bindParam(2, $newDatos[3]); // url 
@@ -182,7 +180,7 @@ class ModeloUserDB
     public static function modificarProducto($codigo): array
     {
         // echo "modificar";
-        $stmt = self::$dbh->prepare(self::$consulta_url_modificar); //creamos la consulta
+        $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas where url_video = ?"); //creamos la consulta
         $stmt->bindValue(1, $codigo);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -202,7 +200,7 @@ class ModeloUserDB
     public static function obtenerFilas()
     {
 
-        $stmt = self::$dbh->query("select * from videos_web_magento2"); //cargamos la consulta
+        $stmt = self::$dbh->query("select * from videos_web_magento2_pruebas"); //cargamos la consulta
         $stmt->execute(); //la ejecuto.
         $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
 
@@ -265,7 +263,7 @@ class ModeloUserDB
     public static function consultar_codigo($codigo): bool
     {
 
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas"); //creamos la consulta
         $stmt->execute();
         $resultado = $stmt->fetchAll();
         //Recorremos todos los elementos en busca de un elemento ya existente
@@ -291,7 +289,7 @@ class ModeloUserDB
     public static function consultar_orden($codigo, $orden): bool
     {
 
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas"); //creamos la consulta
         $stmt->execute();
         $resultado = $stmt->fetchAll();
         //Recorremos todos los elementos en busca de un elemento ya existente
@@ -316,7 +314,7 @@ class ModeloUserDB
     public static function consultarUrl($codigo): bool
     {
         // var_dump($codigo);
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2 where url_video = ?"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where url_video = ?"); //creamos la consulta
         $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
         $stmt->execute();
         $resultado = $stmt->fetchAll();
@@ -356,7 +354,7 @@ class ModeloUserDB
     public static function consultar_orden_modificar($codigo, $orden): bool
     {
 
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2 where prod_codigo =? and orden = ?"); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo =? and orden = ?"); //creamos la consulta
         $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
         $stmt->bindValue(2, $orden, PDO::PARAM_INT);
         //echo " soncultar orden <br>";
@@ -399,14 +397,14 @@ class ModeloUserDB
 
             if ($_GET["ordenar"] == "prod_codigo") {
 
-                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
+                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By prod_codigo LIMIT ? , ?"); //creamos la consulta
 
 
             } else  if ($_GET["ordenar"] == "url_video") {
 
-                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
+                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
             }
-        } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2 WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
+        } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
 
 
         // echo "palabra -> " . $palabra;
@@ -448,7 +446,7 @@ class ModeloUserDB
     public static function obtenerFilasResultados($palabra)
     {
 
-        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2 WHERE prod_codigo LIKE  ? or url_video LIKE ?"); //creamos la consulta
+        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ?"); //creamos la consulta
         // echo "palabra -> " . $palabra;
         $stmt->bindValue(1, "%" . $palabra . "%", PDO::PARAM_STR);
         $stmt->bindValue(2, "%" . $palabra . "%", PDO::PARAM_STR);
@@ -462,7 +460,7 @@ class ModeloUserDB
     // EXPORTAR A EXEL
     public static function cargarDatos()
     {
-        $stmt = self::$dbh->prepare("Select prod_codigo , url_video , orden , activado from videos_web_magento2 "); //creamos la consulta
+        $stmt = self::$dbh->prepare("Select prod_codigo , url_video , orden , activado from videos_web_magento2_pruebas "); //creamos la consulta
         $stmt->execute();
         $resultado = $stmt->fetchAll();
 
@@ -529,7 +527,7 @@ class ModeloUserDB
      public static function obtenerTotalVideos()
      {
  
-         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2"); //creamos la consulta
+         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas"); //creamos la consulta
          // echo "palabra -> " . $palabra;
          $stmt->execute(); //la ejecuto.
          $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.

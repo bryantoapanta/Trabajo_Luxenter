@@ -8,7 +8,7 @@ function CtlVerProductos($msg, $pagina)
     if (isset($_GET["ordenar"])) {
         if ($_GET["ordenar"] == "prod_codigo") {
 
-           // echo "codigo";
+            // echo "codigo";
             $msg = "Ordenador por Codigo Del Prodcuto";
             $productos = ModeloUserDB::GetAllOrder($pagina);
         } else  if ($_GET["ordenar"] == "url_video") {
@@ -46,11 +46,11 @@ function CtlBorrar($codigo)
 //Pasamos el codigo y los nuevos datos para actualizar el producto.
 function CtlModificar($codigo)
 {
-  //  var_dump($codigo);
+      var_dump($codigo);
     $datos = ModeloUserDB::modificarProducto($codigo);
 
-   // var_dump($datos);
-    include_once("vista/modificar.php");
+    // var_dump($datos);
+    include_once "vista/modificar.php";
 }
 
 
@@ -72,32 +72,32 @@ function CtlActualizar($datos)
 
 function CtlAñadir()
 {
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST["prod_codigo"])) {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
-        if (isset($_POST['prod_codigo']) && isset($_POST['url_video']) && isset($_POST['orden_video']) && isset($_POST['activado_video'])) { //si los campos  tienen valor
+            if (isset($_POST['prod_codigo']) && isset($_POST['url_video']) && isset($_POST['orden_video']) && isset($_POST['activado_video'])) { //si los campos  tienen valor
 
-            $codigo = $_POST['prod_codigo'];
-            $url = $_POST['url_video'];
-            $orden = $_POST['orden_video'];
-            $activo = $_POST['activado_video'];
+                $codigo = $_POST['prod_codigo'];
+                $url = $_POST['url_video'];
+                $orden = $_POST['orden_video'];
+                $activo = $_POST['activado_video'];
 
-            $datos = [ //alamcenamos los valores en un array
-                $codigo,
-                $url,
-                $orden,
-                $activo
-            ];
+                $datos = [ //alamcenamos los valores en un array
+                    $codigo,
+                    $url,
+                    $orden,
+                    $activo
+                ];
 
-            if (ModeloUserDB::añadirProducto($datos)) {
-                $msg = "¡Producto añadido con éxito!";
-            } else $msg = "Producto no añadido!"; // llamamos a la funcion para añadir productos.
+                if (ModeloUserDB::añadirProducto($datos)) {
+                    $msg = "¡Producto añadido con éxito!";
+                } else $msg = "Producto no añadido!"; // llamamos a la funcion para añadir productos.
 
-            CtlVerProductos($msg, 1);
-        }
-    } else  include_once("vista/añadir.php");
-
-
-   //var_dump($datos);
+                CtlVerProductos($msg, 1);
+            }
+        } else  include_once "vista/añadir.php";
+    } else  include_once "vista/añadir.php";
+    //var_dump($datos);
 }
 
 // Muestro la tabla con los productos
@@ -107,14 +107,14 @@ function CtlBuscar($palabra, $pagina)
     if (isset($_GET["ordenar"])) {
         if ($_GET["ordenar"] == "prod_codigo") {
 
-           // echo "codigo";
+            // echo "codigo";
             $msg = "Ordenador por Codigo Del Prodcuto";
-            $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+            $productos = ModeloUserDB::GetResultados($palabra, $pagina);
         } else  if ($_GET["ordenar"] == "url_video") {
 
             //echo "url";
             $msg = "Ordenador por Url";
-            $productos = ModeloUserDB::GetResultados($palabra,$pagina);
+            $productos = ModeloUserDB::GetResultados($palabra, $pagina);
         }
     } else {
         $productos = ModeloUserDB::GetResultados($palabra, $pagina);
@@ -138,9 +138,6 @@ function CtlBuscar($palabra, $pagina)
 function CtlExportar()
 {
 
-   $datos = ModeloUserDB::cargarDatos();
-   ModeloUserDB::exportarExel($datos);
-
-
+    $datos = ModeloUserDB::cargarDatos();
+    ModeloUserDB::exportarExel($datos);
 }
-

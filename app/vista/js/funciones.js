@@ -16,9 +16,15 @@ function volver() {
     }
 }
 
+function añadir() {
+    
+        document.location.href = "?orden=Añadir&id=0";
+    
+}
+
 
 //-------------BUSCADOR--------------
-
+/*
 document.addEventListener("DOMContentLoaded", buscador, false);
 
 function buscador() {
@@ -33,7 +39,7 @@ function buscar(e) {
     //alert(palabra);
     document.location.href = "?orden=Buscar&palabra="+palabra+"&id="+1+"&pagina="+1;// le pasamos la ordena ejecutar y la palabra a buscar
 
-}
+}*/
 
 //EXPORTAR A EXEL
 function confirmarExportar(){
