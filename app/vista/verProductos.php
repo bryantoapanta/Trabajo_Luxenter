@@ -30,15 +30,15 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         <div class="row justify-content-center">
             <div class="col-12">
                 <table class="table table-hover">
-                    <thead class="thead-dark">
+                    <thead class="thead-dark text-center">
                         <tr>
 
-                            <th><a class="enlaces" href="?ordenar=prod_codigo">Código</a></th>
-                            <th><a class="enlaces" href="?ordenar=url_video">Url</a></th>
-                            <th a class="enlaces">Orden</th>
-                            <th a class="enlaces">Estado</th>
-                            <th a class="enlaces">Modificar</th>
-                            <th a class="enlaces">Eliminar</th>
+                            <th class="col1"><a class="enlaces" href="?ordenar=prod_codigo">Código</a></th>
+                            <th class="col2"><a class="enlaces" href="?ordenar=url_video">Url</a></th>
+                            <th a class="enlaces col3">Orden</th>
+                            <th a class="enlaces col4">Estado</th>
+                            <th a class="enlaces colf">Modificar</th>
+                            <th a class="enlaces colf">Eliminar</th>
 
                         </tr>
                     </thead>
@@ -58,8 +58,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                                 }
                                 if ($j == 3) {
                                     if ($datoProducto[3] == 0) {
-                                        echo "<td>Desactivado</td>";
-                                    } else  echo "<td>Activado</td>";
+                                        echo "<td class='text-center'>Desactivado</td>";
+                                    } else  echo "<td class='text-center'>Activado</td>";
                                 }
 
                                 if ($j == 2) {
@@ -69,8 +69,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
                             }
                             ?>
 
-                            <td class="modificacion puntero" value="<?= $datoProducto[1] ?>">&#9998;</a></td>
-                            <td class="borrador puntero" value="<?= $datoProducto[1] ?>">&#9760;</a></td>
+                            <td class="modificacion puntero text-center" value="<?= $datoProducto[1] ?>">&#9998;</a></td>
+                            <td class="borrador puntero text-center" value="<?= $datoProducto[1] ?>">&#9760;</a></td>
 
                         </tr>
                     <?php } ?>

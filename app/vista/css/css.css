@@ -133,3 +133,24 @@
 
         .puntero:hover { cursor: pointer; } 
 */
+        /*ANCHURA COLUMNAS DE LAS TABLAS*/
+
+        .col1{
+            width: 8vw;
+        }
+
+
+        .col2{
+            width: 14vw;
+        }
+        .col3{
+            width: 4vw;
+        }
+
+        .col4{
+            width: 8vw;
+        }
+
+        .colf{
+            width: 5vw;
+        }
