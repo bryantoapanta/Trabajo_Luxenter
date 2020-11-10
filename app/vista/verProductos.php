@@ -26,7 +26,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         echo "<div id='aviso'><b>" . $icon_alert . $msg . "</b></div>";
     } else echo "<div id='aviso'><b> Videos Totales: " . ModeloUserDB::obtenerTotalVideos() . "</b></div>";
     ?>
-    <div class="container">
+    <div class="container contenedor_verVideos">
         <div class="row justify-content-center">
             <div class="col-12">
                 <table class="table table-hover">

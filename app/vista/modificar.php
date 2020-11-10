@@ -15,12 +15,12 @@ include_once "cabecera.php";
 
         <div class="form-group">
             <label for="Codigo">Codigo</label>
-            <input type="text" class="form-control disabled" name="prod_codigo" value="<?= $datos[0] ?>">
+            <input type="text" class="form-control disabled" name="prod_codigo" value="<?= $datos[0] ?>" readonly>
         </div>
 
         <div class="form-group">
             <label for="Url">Url</label>
-            <input type="text" class="form-control disabled" name="url_video" value="<?= $datos[1] ?>">
+            <input type="text" class="form-control disabled" name="url_video" value="<?= $datos[1] ?>" readonly>
         </div>
 
         <div class="form-group">

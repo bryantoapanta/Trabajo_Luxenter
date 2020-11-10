@@ -46,7 +46,7 @@ function CtlBorrar($codigo)
 //Pasamos el codigo y los nuevos datos para actualizar el producto.
 function CtlModificar($codigo)
 {
-      //var_dump($codigo);
+    //var_dump($codigo);
     $datos = ModeloUserDB::modificarProducto($codigo);
 
     // var_dump($datos);
@@ -100,28 +100,13 @@ function CtlAñadir()
     //var_dump($datos);
 }
 
-// Muestro la tabla con los productos
-function CtlBuscar($palabra, $pagina)
+
+// Muestro la tabla con los productos que contengan la palabra escrita
+function CtlBuscarPalabra($palabra)
 {
 
-    if (isset($_GET["ordenar"])) {
-        if ($_GET["ordenar"] == "prod_codigo") {
+    $productos = ModeloUserDB::GetResultadosPalabra($palabra);
 
-            // echo "codigo";
-            $msg = "Ordenador por Codigo Del Prodcuto";
-            $productos = ModeloUserDB::GetResultados($palabra, $pagina);
-        } else  if ($_GET["ordenar"] == "url_video") {
-
-            //echo "url";
-            $msg = "Ordenador por Url";
-            $productos = ModeloUserDB::GetResultados($palabra, $pagina);
-        }
-    } else {
-        $productos = ModeloUserDB::GetResultados($palabra, $pagina);
-    }
-
-    // Invoco la vista
-    //var_dump($productos);
     $numResultados = ModeloUserDB::obtenerFilasResultados($palabra);
     if ($numResultados > 0) {
         $msg = "Resultados de " . $palabra . ": " . $numResultados;
@@ -129,10 +114,6 @@ function CtlBuscar($palabra, $pagina)
     } else  $msg = $msg . "<br>" . "Resultados de " . $palabra . ": " . $numResultados;
 
     include_once 'vista/verResultados.php';
-
-    //echo "estas en controlador productos";
-
-
 }
 
 function CtlExportar()

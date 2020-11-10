@@ -54,8 +54,8 @@ if (  (isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) 
             break;
 
         case "Buscar":
-            //echo "buscar";
-            CtlBuscar($_GET["palabra"], $_GET["pagina"]); // llamamos a la funcion verProductos. Le pasamos la pagina y la palabra 
+            
+            CtlBuscarPalabra($_POST["palabra"], $_GET["pagina"]); // llamamos a la funcion verProductos. Le pasamos la pagina y la palabra 
             break;
 
         case "Actualizar":

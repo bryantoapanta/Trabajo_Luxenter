@@ -12,7 +12,7 @@ class ModeloUserDB
 
     private static $consulta_url_modificar = "SELECT * from videos_web_magento2_pruebas where url_video = ?";
     private static $borrar_producto = "DELETE from videos_web_magento2_pruebas where url_video = ?";
-    
+
 
 
     public static function init()
@@ -114,22 +114,6 @@ class ModeloUserDB
     }
 
 
-
-    // Actualizar datos producto (boolean)
-    /* public static function productoUpdate($newDatos): bool
-    {
-        var_dump($newDatos);
-        $stmt = self::$dbh->prepare(self::$modificar_producto);
-        $stmt->bindValue(1, $newDatos[0]);
-        $stmt->bindValue(2, $newDatos[2]);
-        $stmt->bindValue(3, $newDatos[3]);
-        $stmt->bindValue(4, $newDatos[1]);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
-    }*/
 
 
     // Actualizar datos producto (boolean)
@@ -329,26 +313,6 @@ class ModeloUserDB
 
     }
 
-    //// Consulto si existe la url del producto
-    /* public static function consultarUrlModificar($codigo, $url): bool
-    {
-        var_dump($codigo);
-        $stmt = self::$dbh->prepare("Select * from videos_web_magento2_pruebas where prod_codigo = ? and url_video = ?"); //creamos la consulta
-        $stmt->bindValue(1, $codigo, PDO::PARAM_STR);
-        $stmt->bindValue(2, $url, PDO::PARAM_STR);
-        $stmt->execute();
-        $resultado = $stmt->fetchAll();
-        //Recorremos todos los elementos en busca de un elemento ya existente
-        //echo $codigo;
-        echo "resultado= " . $stmt->rowCount();
-        if ($stmt->rowCount() == 1) {
-            echo "  existe una url, puede modificar <br>";
-            return true;
-        } else "no existe resultados de url <br>";
-        return false; //obtenemos el numero de filas totales.
-
-    }*/
-
 
     //// Consulto si existe la orden del producto indicado
     public static function consultar_orden_modificar($codigo, $orden): bool
@@ -364,23 +328,6 @@ class ModeloUserDB
             //  echo "procesando..";
             return true;
         } else return false;
-        /*
-        $resultado = $stmt->fetchAll();
-        //Recorremos todos los elementos en busca de un elemento ya existente
-        //echo $codigo;
-        foreach ($resultado as $fila) {
-
-            // le pregunto si el codigo coincide con algun codigo de la tabla de BD
-            if (strcmp($fila['prod_codigo'], $codigo) == 0) { //utilizamos strcmp para comparar ambos strings
-                echo "prod_codigo = " . $fila['prod_codigo'] . "orden = " . $fila["orden"] . " - " . $orden . "<br>";
-                if ($fila["orden"] == $orden) { //si la orden ya existe le devuelvo true
-                    echo "encontrado";
-                    return true;
-                }
-            } //else echo "no";
-        }
-
-        return false; //devolvemos una tabla con todos lo valores de la base de datos*/
     }
 
     //--------------------------------BUSCADOR-------------------------
@@ -402,9 +349,9 @@ class ModeloUserDB
 
             } else  if ($_GET["ordenar"] == "url_video") {
 
-                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE prod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
+                $stmt = self::$dbh->prepare("SELECT * from videos_web_magento2_pruebas  WHERE lowerprod_codigo LIKE  ? or url_video LIKE ? Order By url_video LIMIT ? , ?"); //creamos la consulta
             }
-        } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
+        } else $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lowerprod_codigo LIKE  ? or url_video LIKE ? LIMIT ?, ?"); //creamos la consulta
 
 
         // echo "palabra -> " . $palabra;
@@ -442,11 +389,53 @@ class ModeloUserDB
     }
 
 
+
+
+
+
+    // DEVUELVE TODOS LOS PRODUCTOS QUE COINCIDEN CON LA PALABRA
+    public static function GetResultadosPalabra($palabra): array
+    {
+      
+        $palabra = strtolower($palabra);
+       
+
+        try {
+            $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lower(prod_codigo) LIKE  ? or lower(url_video) LIKE ?");
+            $stmt->bindValue(1, "%" . $palabra . "%");
+            $stmt->bindValue(2, "%" . $palabra . "%");
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+        $tablaProductos = [];
+        $resultado = $stmt->fetchAll();
+        $contador = 0;
+
+        foreach ($resultado as $fila) {
+
+            $datosProducto = [
+                $fila['prod_codigo'],
+                $fila['url_video'],
+                $fila['orden'],
+                $fila['activado']
+            ];
+
+            $tablaProductos[$contador++] = $datosProducto;
+        }
+        return $tablaProductos; //devolvemos una tabla con todos lo valores de la base de datos
+    }
+
+
+
+
+
     // Obtener filas totales del buscador
     public static function obtenerFilasResultados($palabra)
     {
-
-        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE prod_codigo LIKE  ? or url_video LIKE ?"); //creamos la consulta
+        $palabra = strtolower($palabra);
+        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lower(prod_codigo) LIKE  ? or lower(url_video) LIKE ?"); //creamos la consulta
         // echo "palabra -> " . $palabra;
         $stmt->bindValue(1, "%" . $palabra . "%", PDO::PARAM_STR);
         $stmt->bindValue(2, "%" . $palabra . "%", PDO::PARAM_STR);
@@ -499,7 +488,7 @@ class ModeloUserDB
 
 
 
-           // $mostrar_columnas = false;
+            // $mostrar_columnas = false;
 
 
 
@@ -523,15 +512,15 @@ class ModeloUserDB
     }
 
 
-     // Obtener filas totales del buscador
-     public static function obtenerTotalVideos()
-     {
- 
-         $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas"); //creamos la consulta
-         // echo "palabra -> " . $palabra;
-         $stmt->execute(); //la ejecuto.
-         $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
- 
-         return $Total_filas; //devolvemos el valor
-     }
+    // Obtener filas totales del buscador
+    public static function obtenerTotalVideos()
+    {
+
+        $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas"); //creamos la consulta
+        // echo "palabra -> " . $palabra;
+        $stmt->execute(); //la ejecuto.
+        $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+
+        return $Total_filas; //devolvemos el valor
+    }
 }
