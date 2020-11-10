@@ -134,3 +134,12 @@ $(document).on("click", ".borrador", (function () {
 
 
 
+/* FUNCION VOLVER ------------- */
+
+$(document).on("click", ".volver", (function () {
+
+    $("#div_modificar").html(""); // dejamos en blanco el div_ajax
+    $(".container").fadeTo('slow', 1);//oscurecemos el div 
+    $(".container").removeClass('disabledbutton');
+
+}));

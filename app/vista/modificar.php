@@ -3,7 +3,7 @@ include_once "cabecera.php";
 ?>
 
 
-<button class="btn btn-outline-light mt-3 cancelar" onclick="volver()">X</button>
+<button class="btn btn-outline-light mt-3 cancelar volver">X</button>
 
 <div id="formulario" class="col-8 offset-2">
 
