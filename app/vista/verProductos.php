@@ -4,7 +4,9 @@ include_once "app/databaseConnect.php";
 include_once "principal.php";
 
 $paginas = ceil(ModeloUserDB::obtenerFilas() / 10); //ceil para redondear un numero. Obtener paginas totales
-//echo $pagina;
+$maxPages = 10;
+$inicio = 0;
+$max = 0;
 
 
 $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -20,14 +22,17 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 
 
 
-    <?php
-    if (isset($msg) && $msg != "") {
 
-        echo "<div id='aviso'><b>" . $icon_alert . $msg . "</b></div>";
-    } else echo "<div id='aviso'><b> Videos Totales: " . ModeloUserDB::obtenerTotalVideos() . "</b></div>";
-    ?>
     <div class="container contenedor_verVideos">
         <div class="row justify-content-center">
+
+            <?php
+            if (isset($msg) && $msg != "") {
+
+                echo "<div id='aviso'><b>" . $icon_alert . $msg . "</b></div>";
+            } else echo "<div id='aviso'><b> Videos Totales: " . ModeloUserDB::obtenerTotalVideos() . "</b></div>";
+            ?>
+
             <div class="col-12">
                 <table class="table table-hover">
                     <thead class="thead-dark text-center">
@@ -78,7 +83,7 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
             </div>
         </div>
 
-
+        <!--PAGINACION -->
         <div class="row">
             <div class="paginacion col-4 offset-lg-4 offset-sm-3 offset-1">
                 <ul class="pagination ">
@@ -95,29 +100,51 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
 
 
 
-                    <?php for ($x = 0; $x < $paginas; $x++) : ?>
-                        <li class="page-item <?php if ($pagina == $x + 1) {
-                                                    echo "active";
-                                                } ?>">
-                            <a class="page-link" href='index.php?pagina=<?php echo $x + 1 ?>
+                    <?php
+
+                    if (($pagina % $maxPages) != 0) { //cuando la pagina / maxPages de como resultado un distinto de resto 0.
+                        $inicio = $maxPages * floor($pagina / $maxPages);
+                        $max = $maxPages * ceil($pagina / $maxPages);
+                    } else {
+                        $inicio = $maxPages * ceil($pagina / $maxPages) - 10; // cuando da 0, se resta 10 al inicio ya que si no le restamos 10, el inicio seria -> 10*(10/10) = 10. 
+                        $max = $maxPages * ceil($pagina / $maxPages); //inicio ->10     max->10. Sin esto , no imprimiria la paginacion cuando pulses en 10.
+                    }
+
+                    for ($x = $inicio; $x < $max; $x++) {
+
+                        if ($paginas > $x) { ?>
+                    <li class="page-item <?php if ($pagina == $x + 1) {
+                                                echo "active";
+                                            } ?>">
+                        <a class="page-link" href='index.php?pagina=<?php echo $x + 1 ?>
             <?php
-                        if (isset($_GET["ordenar"])) {
-                            echo "&ordenar=" . $_GET["ordenar"];
-                        } ?>'> <?php echo $x + 1 ?></a></li>
-                    <?php endfor ?>
+                            if (isset($_GET["ordenar"])) {
+                                echo "&ordenar=" . $_GET["ordenar"];
+                            } ?>'> <?php echo $x + 1 ?></a></li>
+                <?php }
+                    }
+
+                    if ($paginas > $max) { //si el total de paginas es mayor al $maximo, se imprime....sino deja de imprimirse ya que en las ultimas paginas, el max es mayor que las paginas, ejemplo paginas->43    max->50
+                ?>
+                <li class="page-item">
+                    <a class="page-link" href='index.php?pagina=<?php echo $max + 1 ?>
+                    '> <?php echo "..." ?></a></li>
+            <?php
+                    }
+            ?>
 
 
-                    <li class="page-item ">
-                        <a class="page-link" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
-                                                                                    echo $pagina + 1;
-                                                                                } else echo $pagina  ?>
+            <li class="page-item ">
+                <a class="page-link" disabled href='index.php?pagina=<?php if ($pagina < $paginas) {
+                                                                            echo $pagina + 1;
+                                                                        } else echo $pagina  ?>
                                             <?php
                                             if (isset($_GET["ordenar"])) {
                                                 echo "&ordenar=" . $_GET["ordenar"];
                                             } ?>'>&#10095;
 
-                        </a>
-                    </li>
+                </a>
+            </li>
                 </ul>
             </div>
 

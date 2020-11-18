@@ -1,12 +1,18 @@
+/** AL INICIAR LA PAGINA */
+$(document).ready(function () {
+    $("#busqueda").focus();
+
+});
+
 
 //FUNCION AJAX BUSCAR
 
 $(document).on('keyup', '#busqueda', function () { //al pulsar una tecla en el buscador ejecutamos la funcion 
-    
+
     var CampoValor = $(this).val(); //almacenamos el valor que se encuentra en #busqueda en una nueva variable
 
     if (CampoValor != "") { //si contiene alguna letra
-        
+
         $.ajax({
             url: '?orden=Buscar&id=0', //llamamos a la funcion
             type: 'POST', //se lo pasamos por POST
@@ -21,16 +27,7 @@ $(document).on('keyup', '#busqueda', function () { //al pulsar una tecla en el b
             })
 
     } else {
-        $.ajax({
-            url: '?', //llamamos a la funcion
-            type: 'POST', //se lo pasamos por POST
-            dataType: 'html', //tipo HTML
-        })
-
-            .done(function (resultado) {
-                $("body").html("");
-                $("body").html(resultado); //en el div #resultado le metemos lo que nos devuelva el php
-            })
+        $(location).attr('href', "?");
     }
 });
 

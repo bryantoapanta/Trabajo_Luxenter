@@ -1,6 +1,4 @@
-<?php
-include_once "cabecera.php";
-?>
+
 
 
 <button class="btn btn-outline-light mt-3 cancelar volver">X</button>

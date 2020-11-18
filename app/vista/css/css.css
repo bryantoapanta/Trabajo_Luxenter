@@ -154,3 +154,11 @@
         .colf{
             width: 5vw;
         }
+
+
+
+        /* CAMPO ELIMINAR ROJO*/
+
+        .borrador:hover {
+            background-color: #dc3545;
+          }

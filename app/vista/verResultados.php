@@ -1,13 +1,3 @@
-<?php
-
-include_once "app/cabecera.php";
-
-if (isset($msg) && $msg != "") {
-
-    echo "<div id='aviso'><b>" . $msg . "</b></div>";
-}
-
-?>
 
 <div class="row justify-content-center">
     <div class="col-12">
