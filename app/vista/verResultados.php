@@ -1,5 +1,8 @@
-
 <div class="row justify-content-center">
+    <?php if ((isset($msg))) {
+        echo "<div class='mt-2' ><b>" . $msg . "</b></div>";
+    }
+    ?>
     <div class="col-12">
         <table class="table table-hover">
             <thead class="thead-dark text-center">
@@ -54,4 +57,6 @@
 <div>
     <button class=" añadir btn btn-success añadirElemento ">Añadir</button>
     <button class=" exportar btn btn-info">Exportar a Exel</button>
+</div>
+
 </div>

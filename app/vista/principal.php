@@ -12,55 +12,7 @@
     <script src="app/vista/js/ajax.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <LINK REL=StyleSheet HREF="app/vista/css/css.css" TYPE="text/css" MEDIA=screen>
-<!--
-    <style type="text/css">
-        #header {
-            font-size: 2em;
-            text-align: center;
 
-        }
-
-        #header h1 a {
-
-            text-decoration: none;
-            color: black;
-        }
-
-        .enlaces {
-
-            text-decoration: none;
-            color: black;
-        }
-
-        #aviso {
-
-            text-align: center;
-            color: red;
-            margin-top: 2em;
-            margin-bottom: 2em;
-        }
-
-        table,
-        th,
-        td,
-        tr {
-            font-family: 'sanssolid', sans-serif;
-            color: #9C9C9C;
-            border: 2px solid #757E82;
-            border-collapse: collapse;
-            padding: 10px;
-        }
-
-        #buscador {
-            text-align: center;
-            margin-bottom: 0em;
-        }
-
-        div {
-            margin-top: 2em;
-            margin-bottom: 2em;
-        }
-    </style>-->
 
 </head>
 

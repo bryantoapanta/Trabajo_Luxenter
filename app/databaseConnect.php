@@ -401,7 +401,7 @@ class ModeloUserDB
        
 
         try {
-            $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lower(prod_codigo) LIKE  ? or lower(url_video) LIKE ?");
+            $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lower(prod_codigo) LIKE  ? or lower(url_video) LIKE ? Limit 10");
             $stmt->bindValue(1, "%" . $palabra . "%");
             $stmt->bindValue(2, "%" . $palabra . "%");
             $stmt->execute();

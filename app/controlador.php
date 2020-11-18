@@ -9,12 +9,12 @@ function CtlVerProductos($msg, $pagina)
         if ($_GET["ordenar"] == "prod_codigo") {
 
             // echo "codigo";
-            $msg = "Ordenador por Codigo Del Prodcuto";
+            $msg = "<div class='alert alert-primary'>Ordenador por Codigo Del Prodcuto</div>";
             $productos = ModeloUserDB::GetAllOrder($pagina);
         } else  if ($_GET["ordenar"] == "url_video") {
 
             //echo "url";
-            $msg = "Ordenador por Url";
+            $msg = "<div class='alert alert-primary'>Ordenador por Url</div>";
             $productos = ModeloUserDB::GetAllOrder($pagina);
         }
     } else $productos = ModeloUserDB::GetAll($pagina);
@@ -35,9 +35,9 @@ function CtlBorrar($codigo)
 
     //llamamos a la funcion que borrara un producto
     if (ModeloUserDB::productoDel($codigo)) {
-        $msg = "El Producto se borrado correctamente.";
+        $msg = "<div class='alert alert-success'>El Producto se borrado correctamente</div>";
     } else {
-        $msg = "No se pudo borrar el producto.";
+        $msg = "<div class='alert alert-danger'>No se pudo borrar el producto</div>";
     }
 
     CtlVerProductos($msg, 1);
@@ -62,8 +62,8 @@ function CtlActualizar($datos)
 
     //var_dump($datos);
     if (ModeloUserDB::productoUpdate($datos)) {
-        $msg = "¡Actualizacion completada con éxito!";
-    } else $msg = "¡Actualizacion no realizada!";
+        $msg = "<div class='alert alert-success'>¡Actualizacion completada con éxito!</div>";
+    } else $msg = "<div class='alert alert-danger'>¡Actualizacion no realizada!</div>";
 
 
 
@@ -90,8 +90,8 @@ function CtlAñadir()
                 ];
 
                 if (ModeloUserDB::añadirProducto($datos)) {
-                    $msg = "¡Producto añadido con éxito!";
-                } else $msg = "Producto no añadido!"; // llamamos a la funcion para añadir productos.
+                    $msg = "<div class='alert alert-success'>¡Producto añadido con éxito!</div>";
+                } else $msg = "<div class='alert alert-danger'>Producto no añadido!</div>"; // llamamos a la funcion para añadir productos.
 
                 CtlVerProductos($msg, 1);
             }
@@ -109,9 +109,9 @@ function CtlBuscarPalabra($palabra)
 
     $numResultados = ModeloUserDB::obtenerFilasResultados($palabra);
     if ($numResultados > 0) {
-        $msg = "Resultados de " . $palabra . ": " . $numResultados;
+        $msg = "<div class='alert alert-success'>Resultados de " . $palabra . ": " . $numResultados."</div>";
         include_once 'vista/verResultados.php';
-    } else  $msg = $msg . "<br>" . "Resultados de " . $palabra . ": " . $numResultados;
+    } else  $msg =  "<div class='alert alert-danger'>" . "Resultados de " . $palabra . ": " . $numResultados."</div>";
 
     include_once 'vista/verResultados.php';
 }
