@@ -71,6 +71,20 @@
             box-shadow: 15px 10px 1000px #999;
         }
 
+        #div_borrar {
+            /* vertical-align: middle;*/
+             position: fixed;
+             z-index: 1;
+             left:0%;
+             top: 15vh;
+             background-color: white;
+             box-shadow: 15px 10px 1000px #999;
+         }
+
+
+
+         
+
         #formulario{
             
             

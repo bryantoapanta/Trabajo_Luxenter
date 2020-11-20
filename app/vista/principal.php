@@ -43,7 +43,7 @@
     <div class="row">
         <div id="div_modificar" class="align-self-center col-6 offset-3 rounded">
         </div>
-        <div id="" class=" col-3"></div>
+        <div id="div_borrar" class="align-self-center col-4 offset-4 rounded"></div>
 
     </div>
 </body>

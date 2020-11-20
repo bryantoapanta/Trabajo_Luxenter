@@ -1,6 +1,3 @@
-
-
-
 <button class="btn btn-outline-light mt-3 cancelar volver">X</button>
 
 <div id="formulario" class="col-8 offset-2">
@@ -13,17 +10,19 @@
 
         <div class="form-group">
             <label for="Codigo">Codigo</label>
-            <input type="text" class="form-control disabled" name="prod_codigo" value="<?= $datos[0] ?>" readonly>
+            <input type="text" class="form-control disabled codigo" name="prod_codigo" value="<?= $datos[0] ?>" readonly>
         </div>
 
         <div class="form-group">
             <label for="Url">Url</label>
-            <input type="text" class="form-control disabled" name="url_video" value="<?= $datos[1] ?>" readonly>
+            <input type="text" class="form-control disabled url" name="url_video" value="<?= $datos[1] ?>" readonly>
+            <div class="msg"></div>
         </div>
 
         <div class="form-group">
             <label for="Orden">Orden</label>
-            <input type="number" class="form-control disabled" name="orden_video" value="<?= $datos[2] ?>">
+            <input type="number" class="form-control disabled orden" name="orden_video" value="<?= $datos[2] ?>">
+            <div class="msg1"></div>
         </div>
 
         <div class="form-group">
@@ -40,6 +39,7 @@
 
 
         <input type="hidden" value="<?= $datos[1] ?>" name="id">
+        <input type="hidden" value="<?= $datos[2] ?>" name="ordenActual" class="ordenActual">
 
     </form>
 </div>

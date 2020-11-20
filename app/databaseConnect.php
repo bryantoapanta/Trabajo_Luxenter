@@ -396,9 +396,9 @@ class ModeloUserDB
     // DEVUELVE TODOS LOS PRODUCTOS QUE COINCIDEN CON LA PALABRA
     public static function GetResultadosPalabra($palabra): array
     {
-      
+
         $palabra = strtolower($palabra);
-       
+
 
         try {
             $stmt = self::$dbh->prepare("SELECT * FROM videos_web_magento2_pruebas WHERE lower(prod_codigo) LIKE  ? or lower(url_video) LIKE ? Limit 10");
@@ -522,5 +522,38 @@ class ModeloUserDB
         $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
 
         return $Total_filas; //devolvemos el valor
+    }
+
+
+    /** COMPROBAR DATOS */
+    public static function checkUrl($user)
+    {
+
+        $stmt = self::$dbh->prepare("SELECT url_video FROM videos_web_magento2_pruebas where url_video = ?"); //creamos la consulta
+        $stmt->bindvalue(1, $user);
+        $stmt->execute(); //la ejecuto.
+        $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+        if ($Total_filas != 0) { //si hay resultados
+            // echo "si existe";
+            return false;
+        } else //echo "no existe";
+            return true;
+    }
+
+    public static function checkOrden($orden, $ordenActual, $codigo)
+    {
+        echo $orden . " ----" . $ordenActual . " ----" . $codigo;
+        $stmt = self::$dbh->prepare("SELECT url_video FROM videos_web_magento2_pruebas where upper(prod_codigo) = ? and orden = ?"); //creamos la consulta
+        $stmt->bindvalue(1, strtoupper($codigo));
+        $stmt->bindvalue(2, $orden);
+        $stmt->execute(); //la ejecuto.
+        $Total_filas = $stmt->rowCount(); //obtenemos el numero de filas totales.
+        if ($Total_filas != 0) { //si hay resultados
+            if ($orden == $ordenActual) {
+                return true;
+            }
+            return false;
+        } else //echo "no existe";
+            return true;
     }
 }

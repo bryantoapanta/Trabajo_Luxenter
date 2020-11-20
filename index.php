@@ -22,22 +22,30 @@ var_dump(isset($_GET['orden']) && isset($_POST['id']));*/
 
 
 
-if (  (isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) && isset($_GET['id']))              ) {
+if ((isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) && isset($_GET['id']))) {
 
 
 
-  //echo $_GET["orden"];
-  $orden=$_GET['orden'];
+    //echo $_GET["orden"];
+    $orden = $_GET['orden'];
 
 
     switch ($_GET['orden']) {
+
+        case "UserCheck":
+            CtlUserCheck($_POST['id'], $_POST["codigo"], $_POST["tipo"],$_POST['orden']); //le pasamps el id -> ter_codigo, el codigo -> el codigo a comprobar, tipo->que tipo de codigo es, id2->el codigo actual(modificar)
+            break;
 
         case "Exportar":
             CtlExportar(); // llamamos a la funcion borrar y le pasamos el codigo del producto.
             break;
 
-        case "Borrar":
-            CtlBorrar($_POST["id"]); // llamamos a la funcion borrar y le pasamos el codigo del producto.
+        case "Delete":
+            CtlDelete($_POST['id']);
+            break;
+
+        case "DeleteAlert":
+            CtlDeleteAlert($_POST['id']);
             break;
 
         case "Modificar":
@@ -54,7 +62,7 @@ if (  (isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) 
             break;
 
         case "Buscar":
-            
+
             CtlBuscarPalabra($_POST["palabra"], $_GET["pagina"]); // llamamos a la funcion verProductos. Le pasamos la pagina y la palabra 
             break;
 
@@ -63,7 +71,7 @@ if (  (isset($_GET['orden']) && isset($_POST['id']))  or (isset($_GET['orden']) 
             if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (isset($_POST['prod_codigo']) && isset($_POST['url_video']) && isset($_POST['orden_video']) && isset($_POST['activado_video'])) { //si los campos  tienen valor
 
-                    $codigo = $_POST['prod_codigo'];
+                    $codigo = strtoupper($_POST['prod_codigo']);
                     $url = $_POST['url_video'];
                     $orden = $_POST['orden_video'];
                     $activo = $_POST['activado_video'];

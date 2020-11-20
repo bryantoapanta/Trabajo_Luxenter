@@ -112,24 +112,23 @@ $(document).on("click", ".modificacion", (function () {
 //FUNCION BORRAR
 
 $(document).on("click", ".borrador", (function () {
-    if (confirm("¿Quieres eliminar el producto:  " + $(this).attr("value") + "?")) {
-        $.ajax({
-            url: '?orden=Borrar', //llamamos a la funcion
-            type: 'POST', //se lo pasamos por POST
-            dataType: 'html', //tipo HTML
-            data: {
-                id: $(this).attr("value"),
 
-            },
-        })
+    $.ajax({
+        url: '?orden=DeleteAlert', //llamamos a la funcion
+        type: 'POST', //se lo pasamos por POST
+        dataType: 'html', //tipo HTML
+        data: {
+            id: $(this).attr("value"),
 
-            .done(function (resultado) {
+        },
+    })
 
-                $("body").html(resultado); //
-                ;
-            });
-
-    }
+        .done(function (resultado) {
+            $(".container").addClass('disabledbutton');//le añado una clase donde inhabilito las funciones del div
+            $(".container").fadeTo('slow', .1);//oscurecemos el div 
+            $("#div_borrar").html(resultado); //en el div le metemos lo que nos devuelva el php
+            $("#div_borrar").css("top", "30vh");
+        });
 }
 )
 );
@@ -141,7 +140,65 @@ $(document).on("click", ".borrador", (function () {
 $(document).on("click", ".volver", (function () {
 
     $("#div_modificar").html(""); // dejamos en blanco el div_ajax
+    $("#div_borrar").html(""); // dejamos en blanco el div_ajax
     $(".container").fadeTo('slow', 1);//oscurecemos el div 
     $(".container").removeClass('disabledbutton');
+
+}));
+
+
+
+//FUNCION COMPROBAR URL
+
+$(document).on('keyup', '.url', (function () { //al pulsar una tecla en el buscador ejecutamos la funcion 
+
+    $url = $(this).val();
+    if ($url != "") {
+        $.ajax({
+            url: '?orden=UserCheck', //llamamos a la funcion
+            type: 'POST', //se lo pasamos por POST
+            dataType: 'html', //tipo HTML
+            data: {
+                id: $url,
+                tipo: "url",
+            }, //le pasamos el parametro id 
+        })
+            .done(function (resultado) {
+                $(".msg").html(resultado);
+            });
+    } else {
+        $(".msg").html("");
+    }
+
+
+}));
+
+//FUNCION COMPROBAR ORDEN
+
+$(document).on('keyup', '.orden', (function () { //al pulsar una tecla en el buscador ejecutamos la funcion 
+
+    $orden = $(this).val();
+    $codigo = $(".codigo").val();
+    $ordenActual = $(".ordenActual").attr("value");
+    if ($orden != "") {
+        $.ajax({
+            url: '?orden=UserCheck', //llamamos a la funcion
+            type: 'POST', //se lo pasamos por POST
+            dataType: 'html', //tipo HTML
+            data: {
+                id: $orden,
+                codigo: $codigo,
+                tipo: "orden",
+                orden: $ordenActual,
+            }, //le pasamos el parametro id 
+        })
+            .done(function (resultado) {
+                $(".msg1").html(resultado);
+            });
+    } else {
+        $(".msg1").html("");
+
+    }
+
 
 }));
