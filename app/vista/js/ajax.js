@@ -202,3 +202,33 @@ $(document).on('keyup', '.orden', (function () { //al pulsar una tecla en el bus
 
 
 }));
+
+
+
+$(document).on('change', '.orden', (function () { //al pulsar una tecla en el buscador ejecutamos la funcion 
+
+    $orden = $(this).val();
+    $codigo = $(".codigo").val();
+    $ordenActual = $(".ordenActual").attr("value");
+    if ($orden != "") {
+        $.ajax({
+            url: '?orden=UserCheck', //llamamos a la funcion
+            type: 'POST', //se lo pasamos por POST
+            dataType: 'html', //tipo HTML
+            data: {
+                id: $orden,
+                codigo: $codigo,
+                tipo: "orden",
+                orden: $ordenActual,
+            }, //le pasamos el parametro id 
+        })
+            .done(function (resultado) {
+                $(".msg1").html(resultado);
+            });
+    } else {
+        $(".msg1").html("");
+
+    }
+
+
+}));

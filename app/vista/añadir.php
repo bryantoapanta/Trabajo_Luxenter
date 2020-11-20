@@ -11,18 +11,18 @@
         <div class="form-group">
             <label for="Codigo">Codigo</label>
             <input type="text" class="form-control disabled codigo" name="prod_codigo" value="<?php $caracteres = '0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
-                                                                                        echo substr(str_shuffle($caracteres), 0, 8); ?>">
+                                                                                                echo substr(str_shuffle($caracteres), 0, 8); ?>" required>
         </div>
 
         <div class="form-group">
             <label for="Url">Url</label>
-            <input type="text" class="form-control disabled url" name="url_video" value="">
+            <input type="text" class="form-control disabled url" name="url_video" value="" required>
             <div class="msg"></div>
         </div>
 
         <div class="form-group">
             <label for="Orden">Orden</label>
-            <input type="number" class="form-control disabled orden" name="orden_video" value="<?= $datos[2] ?>">
+            <input type="number" class="form-control disabled orden" name="orden_video" value="<?= $datos[2] ?>" required>
             <div class="msg1"></div>
         </div>
 

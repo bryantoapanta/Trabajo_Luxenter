@@ -21,7 +21,7 @@
 
         <div class="form-group">
             <label for="Orden">Orden</label>
-            <input type="number" class="form-control disabled orden" name="orden_video" value="<?= $datos[2] ?>">
+            <input type="number" class="form-control disabled orden" name="orden_video" value="<?= $datos[2] ?>" required>
             <div class="msg1"></div>
         </div>
 

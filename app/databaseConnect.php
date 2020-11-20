@@ -542,7 +542,7 @@ class ModeloUserDB
 
     public static function checkOrden($orden, $ordenActual, $codigo)
     {
-        echo $orden . " ----" . $ordenActual . " ----" . $codigo;
+        //echo $orden . " ----" . $ordenActual . " ----" . $codigo;
         $stmt = self::$dbh->prepare("SELECT url_video FROM videos_web_magento2_pruebas where upper(prod_codigo) = ? and orden = ?"); //creamos la consulta
         $stmt->bindvalue(1, strtoupper($codigo));
         $stmt->bindvalue(2, $orden);

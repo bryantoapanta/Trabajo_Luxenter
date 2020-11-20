@@ -1,7 +1,7 @@
 <div id="formulario" class="col-12">
 
     <div class="titulo_modificar text-center ">
-        <h4>¿Estas seguro de que quiere eliminar el usuario <?= strtoupper($user) ?>?</h4>
+        <h4>¿Estas seguro de que quiere eliminar <?= strtoupper($user) ?>?</h4>
     </div>
 
     <form name='añadir' method="POST" action="index.php?orden=Delete">
