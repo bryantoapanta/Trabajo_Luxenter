@@ -80,8 +80,8 @@ $icon_alert = '<svg class="bi bi-alert-triangle text-success" width="32" height=
         </div>
 
         <!--PAGINACION -->
-        <div class="row">
-            <div class="paginacion col-4 offset-lg-4 offset-sm-3 offset-1">
+        <div class="row justify-content-center">
+            <div class="paginacion">
                 <ul class="pagination ">
                     <li class="page-item ">
                         <a class="page-link" href='index.php?pagina=<?php if ($pagina > 1) {
